@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import LoadableComponent from '@/loadable'
+const HomePage = LoadableComponent(() => import('@/page/homePage'));
+const WelcomePage = LoadableComponent(() => import('@/page/welcomePage'));
 
 class App extends React.Component {
     render(){
         return (
-            <div>
-                longhaha's blog
-            </div>
+            <WelcomePage />
         )
     }
 }

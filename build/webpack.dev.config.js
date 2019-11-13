@@ -10,7 +10,7 @@ module.exports = webpackMerge(baseWebpackConfig,{
         filename: "static/js/[name].[hash].js", // 打包后的文件名称
     },
     // 指定构建环境  
-    mode:"production",
+    mode:"development",
     // 插件
     plugins:[
         new HtmlWebpackPlugin({
