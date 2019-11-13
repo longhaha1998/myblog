@@ -1,5 +1,6 @@
 const utils = require("./utils");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     // 入口
@@ -7,21 +8,40 @@ module.exports = {
         app: "./src/index" 
     },
 
-    // 出口
-    output: {
-        path : utils.resolve("../dist"), // 出口路径
-        filename: "js/[name].[hash].js", // 打包后的文件名称
-    },
 
     // 模块
     module:{
         rules:[
             {
+                test: /\.(js|jsx)$/,//一个匹配loaders所处理的文件的拓展名的正则表达式，这里用来匹配js和jsx文件（必须）
+                exclude: /node_modules/,//屏蔽不需要处理的文件（文件夹）（可选）
+                loader: 'babel-loader',//loader的名称（必须）
+            },
+            {
                 test: /\.css$/,
                 use:[
                     {
-                        loader: 'style-loader', // 创建 <style></style>
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                          // you can specify a publicPath here
+                          // by default it uses publicPath in webpackOptions.output
+                          publicPath: 'css/',
+                          hmr: process.env.NODE_ENV === 'development',
+                        },
                     },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: () => [
+                                require('autoprefixer') ({
+                                    overrideBrowserslist: ['last 2 version', '>1%', 'ios 7']
+                                })
+                            ]
+                        }
+                    },
+                    // {
+                    //     loader: 'style-loader', // 创建 <style></style>
+                    // },
                     { 
                         loader: 'css-loader',  // 转换css
                     }
@@ -31,10 +51,29 @@ module.exports = {
                 test: /\.scss$/,
                 use:[
                     {
-                        loader: 'style-loader',
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                          // you can specify a publicPath here
+                          // by default it uses publicPath in webpackOptions.output
+                          publicPath: 'css/',
+                          hmr: process.env.NODE_ENV === 'development',
+                        },
                     },
+                    // {
+                    //     loader: 'style-loader',
+                    // },
                     {
                         loader: 'css-loader',
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: () => [
+                                require('autoprefixer') ({
+                                    overrideBrowserslist: ['last 2 version', '>1%', 'ios 7']
+                                })
+                            ]
+                        }
                     },
                     {
                         loader: 'sass-loader'
@@ -61,6 +100,13 @@ module.exports = {
     },
 
     plugins: [
+        new MiniCssExtractPlugin({
+            // Options similar to the same options in webpackOptions.output
+            // all options are optional
+            // filename: '[name].[hash].css',
+            chunkFilename: '[id].[chunkhash].css',
+            ignoreOrder: false, // Enable to remove warnings about conflicting order
+        }),
         new CopyWebpackPlugin([
             {
                 from: utils.resolve('../static'), // 从哪个目录copy
