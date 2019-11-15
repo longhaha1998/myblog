@@ -86,7 +86,7 @@ module.exports = webpackMerge(baseWebpackConfig,{
 
                 styles: {
                     name: 'styles',
-                    test: /\.css$/,
+                    test: /\.(css|scss)$/,
                     chunks: 'all',
                     enforce: true,
                 },

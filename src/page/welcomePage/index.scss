@@ -1,7 +1,7 @@
 #welcomDom{
     width: 100%;
     height: 100%;
-    background-color: #0099CC;
+    background-color: #3366CC;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -9,11 +9,14 @@
     color: white;
     #welcomAnimDom{
         font-family: 'Bungasai';
-        font-size: 100px;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
+        font-size: 100px;
+        @media (max-width: 680px) {
+            font-size: 20px;            
+        }
         @keyframes fade-in{  
             0%{ opacity: 0;transform: scale(0.8);}
             100%{opacity:1;transform: scale(1);}
@@ -46,13 +49,16 @@
             font-family: 'Bungasai';
             font-size: 30px;
             text-align: center;
+            @media (max-width: 680px) {
+                font-size: 20px;            
+            }
         }
         #welcomLink{
             opacity: 0;
             animation: fade-in 2s ease-in 1500ms 1;
             animation-fill-mode:forwards;
             font-family: 'Bungasai';
-            font-size: 20px;
+            font-size: 30px;
             width: 200px;
             height: 50px;
             color: white;
@@ -62,6 +68,9 @@
             background-color: transparent;
             border: 1px solid white;
             border-radius: 30px;
+            @media (max-width: 680px) {
+                font-size: 20px;            
+            }
         }
     }
 }

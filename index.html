@@ -2,12 +2,20 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name='viewport' content='width=device-width,height=device-height,initial-scale=1,user-scalable=no'/>
+    <!-- <link rel="preload" href="static/font/Bungasai.ttf" as="font"> -->
     <link rel="stylesheet" href="static/css/resetHtml.css">
     <title>longhaha'blog</title>
+    <script>
+      (function () {
+          const dpr = window.devicePixelRatio || 1;
+          const scale = 1 / dpr;
+          const metaEl = document.querySelector('meta[name="viewport"]');
+          metaEl.setAttribute('content', 'width=device-width,height=device-height,user-scalable=no,initial-scale=' + scale + ',maximum-scale=' + scale + ',minimum-scale=' + scale);
+      })();
+    </script>
   </head>
   <body>
     <div id="app"></div>
-    <!-- built files will be auto injected -->
   </body>
 </html>

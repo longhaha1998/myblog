@@ -25,8 +25,8 @@ module.exports = {
                         options: {
                           // you can specify a publicPath here
                           // by default it uses publicPath in webpackOptions.output
-                          publicPath: 'css/',
-                          hmr: process.env.NODE_ENV === 'development',
+                          // publicPath: 'static/css/',
+                          // hmr: process.env.NODE_ENV === 'development',
                         },
                     },
                     {
@@ -55,8 +55,9 @@ module.exports = {
                         options: {
                           // you can specify a publicPath here
                           // by default it uses publicPath in webpackOptions.output
-                          publicPath: 'css/',
-                          hmr: process.env.NODE_ENV === 'development',
+                          publicPath: '../../',
+                          // hmr: process.env.NODE_ENV === 'development',
+                          hmr: true
                         },
                     },
                     // {
@@ -91,10 +92,10 @@ module.exports = {
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
                 loader: 'file-loader',
-                // options: {
-                //     limit: 10000, // 小于10000B的图片base64的方式引入，大于10000B的图片以路径的方式导入
-                //     name: 'static/fonts/[name].[hash:7].[ext]'
-                // }
+                options: {
+                    limit: 10000, // 小于10000B的图片base64的方式引入，大于10000B的图片以路径的方式导入
+                    name: 'static/fonts/[name].[hash:7].[ext]'
+                }
             }
         ]
     },
@@ -103,8 +104,9 @@ module.exports = {
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
             // all options are optional
-            // filename: '[name].[hash].css',
-            chunkFilename: '[id].[chunkhash].css',
+            filename: 'static/css/[name].[chunkhash].css',
+            // chunke意思为块 指的是动态（异步）加载产生的块
+            chunkFilename: 'static/css/[id].[chunkhash].css',
             ignoreOrder: false, // Enable to remove warnings about conflicting order
         }),
         new CopyWebpackPlugin([
