@@ -1,5 +1,6 @@
 import React from 'react';
-import {BrowserRouter, Router, Link, Switch, Redirect} from 'react-router-dom'
+import {BrowserRouter, Router, Link, Switch, Redirect, Route} from 'react-router-dom';
+const HomeContent = React.lazy(() => import('@/page/homeContent'));
 import './index.scss'
 
 class HomePage extends React.Component{
@@ -15,11 +16,11 @@ class HomePage extends React.Component{
                         <a id="contactMe">联系本人</a>
                     </div>
                 </header>
-                <main id="homeMain">
-                    <div id="contentDom">
-
-                    </div>
-                </main>
+                <Switch>
+                    <Route path="/home">
+                        <HomeContent />
+                    </Route>
+                </Switch>
             </div>
         )
     }
