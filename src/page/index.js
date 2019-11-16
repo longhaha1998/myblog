@@ -3,6 +3,7 @@ import { HashRouter, Switch, Route, Redirect, Link} from 'react-router-dom'
 import { inject, observer } from "mobx-react"
 const WelcomePage = React.lazy(() => import('@/page/welcomePage'));
 const HomePage = React.lazy(() => import('@/page/HomePage'));
+const LoadingPage = React.lazy(() => import('./loadingPage'));
 
 
 @inject("WelcomeAnimStore")// 注入mobx实例到props
@@ -13,7 +14,7 @@ class AppPage extends React.Component {
         const { WelcomeAnimStore } = this.props;
         WelcomeAnimStore.changeIfPlayAnim(sessionStorage.getItem("havePalyedAnim"));
         return (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<LoadingPage />}>
                 <HashRouter>
                     <Switch>
                         <Route exact path="/" render={(routeProps) => WelcomeAnimStore.ifPlayedAnim?<Redirect to="/home"/>:<WelcomePage {...routeProps}/>} />

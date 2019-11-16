@@ -1,7 +1,7 @@
 #contentDom{
     width: 80vw;
-    height: 50vh;
-    margin-top: 5px;
+    height: 55vh;
+    margin-top: 30px; 
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.5);
     position: relative;
@@ -18,8 +18,12 @@
         background-size: 100% 100%;
     }
     #contentHeader{
-        width: 15vh;
-        height: 15vh;
+        width: 15vw;
+        height: 15vw;
+        @media (min-aspect-ratio : 1/1){
+            width: 15vh;
+            height: 15vh;
+        }
         background: url("../../assets/image/head.jpg") no-repeat;
         background-size: 100% 100%;
         border-radius: 50%;
@@ -36,7 +40,7 @@
         bottom: 0;
         z-index: 1;
         padding-top: 6vh;
-        overflow: hidden;
+        overflow: auto;
         #labelBox{
             width: 100%;
             display: flex;
@@ -68,14 +72,15 @@
             justify-content: center;
             padding-top: 10px;
             #describeUl{
-                font-size: 14px;
+                font-size: 1rem;
                 list-style-type: disc;
                 list-style-position: inside;
                 li{
                     margin: 4px 0;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
+                    word-wrap: wrap;
+                    // overflow: hidden;
+                    // text-overflow: ellipsis;
+                    // white-space: nowrap;
                 }
                 li:last-child{
                     margin-top: 10px; 

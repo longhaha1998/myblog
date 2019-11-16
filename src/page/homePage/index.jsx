@@ -3,6 +3,7 @@ import {Link, Switch, Route, Redirect} from 'react-router-dom';
 const HomeContent = React.lazy(() => import('../homeContent'));
 const DemoPage = React.lazy(() => import('../demo'));
 const ArticlePage = React.lazy(() => import('../article'));
+const LoadingPage = React.lazy(() => import('../loadingPage'));
 import './index.scss'
 
 class HomePage extends React.Component{
@@ -20,21 +21,24 @@ class HomePage extends React.Component{
                 </header>
                 <Switch>
                     <Route exact path="/home">
-                        <Suspense fallback={<div>Loading...</div>}>
+                        <Suspense fallback={<LoadingPage />}>
                             <HomeContent />
                         </Suspense>
                     </Route>
                     <Route path="/home/demo">
-                        <Suspense fallback={<div>Loading...</div>}>
+                        <Suspense fallback={<LoadingPage />}>
                             <DemoPage />
                         </Suspense>
                     </Route>
                     <Route path="/home/article">
-                        <Suspense fallback={<div>Loading...</div>}>
+                        <Suspense fallback={<LoadingPage />}>
                             <ArticlePage />
                         </Suspense>
                     </Route>
                 </Switch>
+                <footer id="homefooter">
+                    @Copyright 2019-01-01 longhaha All rights Reserved
+                </footer>
             </div>
         )
     }

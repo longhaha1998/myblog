@@ -1,9 +1,10 @@
 import React from 'react';
+import "./index.scss"
 
 class ArticlePage extends React.Component{
     render(){
         return(
-            <div>
+            <div id="articleBox">
                 ArticlePage!!!
             </div>
         )
