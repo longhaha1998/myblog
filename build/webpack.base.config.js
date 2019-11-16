@@ -87,7 +87,6 @@ module.exports = {
                 options: {
                     limit: 10000, // url-loader 包含file-loader，这里不用file-loader, 小于10000B的图片base64的方式引入，大于10000B的图片以路径的方式导入
                     name: 'static/img/[name].[hash:7].[ext]',
-                    publicPath: '../../',
                 }
             },
             {
@@ -95,7 +94,7 @@ module.exports = {
                 loader: 'file-loader',
                 options: {
                     limit: 10000, // 小于10000B的图片base64的方式引入，大于10000B的图片以路径的方式导入
-                    name: 'static/fonts/[name].[hash:7].[ext]'
+                    name: 'static/font/[name].[hash:7].[ext]'
                 }
             }
         ]

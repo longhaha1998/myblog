@@ -8,6 +8,7 @@ module.exports = webpackMerge(baseWebpackConfig,{
     output: {
         path : utils.resolve("../dist"), // 出口路径
         filename: "static/js/[name].[hash].js", // 打包后的文件名称
+        publicPath: "/"
     },
     // 指定构建环境  
     mode:"development",
@@ -22,7 +23,9 @@ module.exports = webpackMerge(baseWebpackConfig,{
     devtool: 'inline-source-map',
     // 开发环境本地启动的服务配置
     devServer: {
-        contentBase: '../dist',
+        contentBase: utils.resolve(__dirname, '../dist'),//默认是项目的根目录也就是这个文件所在的目录，相对路径都是相对于这个文件而言的
+        publicPath: "/",
+
         historyApiFallback: true, // 当找不到路径的时候，默认加载index.html文件
         hot: true,
         //contentBase: false, // 告诉服务器从哪里提供内容。只有在你想要提供静态文件时才需要

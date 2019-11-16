@@ -1,6 +1,8 @@
-import React from 'react';
-import {BrowserRouter, Router, Link, Switch, Redirect, Route} from 'react-router-dom';
-const HomeContent = React.lazy(() => import('@/page/homeContent'));
+import React, {Suspense}from 'react';
+import {Link, Switch, Route, Redirect} from 'react-router-dom';
+const HomeContent = React.lazy(() => import('../homeContent'));
+const DemoPage = React.lazy(() => import('../demo'));
+const ArticlePage = React.lazy(() => import('../article'));
 import './index.scss'
 
 class HomePage extends React.Component{
@@ -17,8 +19,20 @@ class HomePage extends React.Component{
                     </div>
                 </header>
                 <Switch>
-                    <Route path="/home">
-                        <HomeContent />
+                    <Route exact path="/home">
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <HomeContent />
+                        </Suspense>
+                    </Route>
+                    <Route path="/home/demo">
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <DemoPage />
+                        </Suspense>
+                    </Route>
+                    <Route path="/home/article">
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <ArticlePage />
+                        </Suspense>
                     </Route>
                 </Switch>
             </div>

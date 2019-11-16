@@ -12,6 +12,7 @@ module.exports = webpackMerge(baseWebpackConfig,{
     output: {
         path : utils.resolve("../dist"), // 出口路径
         filename: "static/js/[name].[chunkhash].js", // 打包后的文件名称
+        //chunkFilename: 'static/js/[name].[chunkhash].js',// 动态生成的文件名称
     },
     // 指定构建环境  
     mode:"production",

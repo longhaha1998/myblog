@@ -1,5 +1,5 @@
 import React, {Suspense}from 'react';
-import { BrowserRouter, Switch, Route, Redirect,} from 'react-router-dom'
+import { HashRouter, Switch, Route, Redirect, Link} from 'react-router-dom'
 import { inject, observer } from "mobx-react"
 const WelcomePage = React.lazy(() => import('@/page/welcomePage'));
 const HomePage = React.lazy(() => import('@/page/HomePage'));
@@ -14,14 +14,14 @@ class AppPage extends React.Component {
         WelcomeAnimStore.changeIfPlayAnim(sessionStorage.getItem("havePalyedAnim"));
         return (
             <Suspense fallback={<div>Loading...</div>}>
-                <BrowserRouter>
+                <HashRouter>
                     <Switch>
-                        <Route exact path="/" render={(routeProps) => WelcomeAnimStore.ifPlayedAnim?<Redirect to="/home" {...routeProps}/>:<WelcomePage {...routeProps}/>} />
+                        <Route exact path="/" render={(routeProps) => WelcomeAnimStore.ifPlayedAnim?<Redirect to="/home"/>:<WelcomePage {...routeProps}/>} />
                         <Route path="/home">
                             <HomePage />
                         </Route>
                     </Switch>
-                </BrowserRouter>  
+                </HashRouter>
             </Suspense>
         )
     }
