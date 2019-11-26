@@ -1,7 +1,33 @@
-#LoadingBox{
+/* load6 */
+@keyframes bouncedelay {
+    0%, 80%, 100% {
+      transform: scale(0.0);
+    } 40% {
+      transform: scale(1.0);
+    }
+  }
+#LoadingBox {
     widows: 100%;
     min-height: 88vh;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+#LoadingBox > div {
+  width: 40px;
+  height: 40px;
+  margin: 0 10px;
+  background-color: #3366CC;
+  border-radius: 100%;
+  display: inline-block;
+  animation: bouncedelay 1.4s infinite ease-in-out;
+  animation-fill-mode: both;
+}
+#LoadingBox .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+#LoadingBox .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
 }

@@ -1,0 +1,149 @@
+#loginDom{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    background-color: rgba($color:#CCCCCC, $alpha:0.3);
+    #login-wrap{
+        background-color: rgba($color:rgb(189, 189, 189), $alpha:1);
+        margin: auto;
+        flex-basis: 525px;
+        max-width: 525px;
+        height: 725px;
+        position: relative;
+        box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+        #loginMain{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            padding: 50px;
+            background: rgba(255, 255, 255, 0.83);
+            // X偏移，Y偏移，阴影模糊半径，阴影扩散半径，和阴影颜色
+            box-shadow: 12px -12px 0px 0px rgba(251, 251, 251, 0.24);
+            .tab{
+                font-size: 22px;
+                font-weight: 600;
+                padding-bottom: 5px;
+                margin: 0 15px 10px 0;
+                display: inline-block;
+                border-bottom: 2px solid transparent;
+                color: #777;
+                cursor: pointer;
+            }
+            .sign-in, .sign-up{
+                display: none;
+            }
+            .sign-in:checked+.tab, .sign-up:checked+.tab{
+                color: #000;
+                border-color: #3366CC;
+            }
+            #login-form{
+                min-height: 500px;
+                position: relative;
+                // CSS 属性 perspective指定了观察者与 z=0 平面的距离，使具有三维位置变换的元素产生透视效果。 
+                // z>0 的三维元素比正常大，而 z<0 时则比正常小，大小程度由该属性的值决定。
+                perspective: 1500px;
+                // CSS 属性 transform-style 设置元素的子元素是位于 3D 空间中还是平面中。
+                transform-style: preserve-3d;
+                margin-top: 60px;
+                .group{
+                    margin-bottom: 50px;
+                    .check{
+                        display: none;
+                    }
+                    .label, .input, .button{
+                        width: 100%;
+                        color: #fff;
+                        display: block;
+                    }
+                    .input, .button{
+                        border: none;
+                        border-bottom: 1px solid #3366CC;
+                        padding: 15px 20px;
+                        border-radius: 25px;
+                        background: rgba(255, 255, 255, 0.54);
+                        letter-spacing: 1px;
+                        font-size: 16px;
+                        color: #000;
+                        outline: none;
+                    }
+                    .button{
+                        cursor: pointer;
+                    }
+                    .label{
+                        color: #333;
+                        font-weight: 600;
+                        font-size: 14px;
+                        letter-spacing: 1px;
+                        margin-bottom: 10px;
+                    }
+                    .button{
+                        background:rgba($color:#3366CC, $alpha:0.8);
+                    }
+                    #checkLabel{
+                        display: flex;
+                        align-items: center;
+                    }
+                    #checkLabel .icon{
+                        // CSS 的属性 vertical-align 用来指定行内元素（inline）或表格单元格（table-cell）元素的垂直对齐方式。
+                        width: 15px;
+                        height: 15px;
+                        border-radius: 2px;
+                        position: relative;
+                        display: inline-block;
+                        background: #3366CC;
+                        margin-right: 5px;
+                    }
+                    label .icon:before,label .icon:after{
+                        content: '';
+                        width: 10px;
+                        height: 2px;
+                        background: #fff;
+                        position: absolute;
+                        transition: all .2s ease-in-out 0s;
+                    }
+                    label .icon:before{
+                        left: 3px;
+                        width: 5px;
+                        bottom: 6px;
+                        transform: scale(0) rotate(0);
+                    }
+                    label .icon:after{
+                        top: 6px;
+                        right: 0;
+                        transform: scale(0) rotate(0);
+                    }
+                    .check:checked+label .icon {
+                        background: #3366CC;
+                    }
+                    .check:checked+label .icon:before {
+                        transform: scale(1) rotate(45deg);
+                    }
+                    .check:checked+label .icon:after {
+                        transform: scale(1) rotate(-45deg);
+                    }
+                }
+            }
+        }
+    }
+}
+
+#signinDom, #signupDom{
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    transform: rotateY(180deg);
+    width: 100%;
+    // CSS 属性 backface-visibility 指定当元素背面朝向观察者时是否可见。
+    backface-visibility: hidden;
+    transition: all .4s linear;
+}
+
+.sign-in:checked+.tab+.sign-up+.tab+#login-form #signinDom{
+    transform: rotate(0);
+}
+.sign-up:checked+.tab+#login-form #signupDom{
+    transform: rotate(0);
+}

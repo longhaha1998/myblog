@@ -1,20 +1,24 @@
 #contentDom{
     width: 80vw;
     height: 55vh;
-    margin-top: 30px; 
+    margin-top: 30px;
+    @media (max-aspect-ratio : 1/1){
+        // 宽度大于高度的时候使用
+        margin-top: 60px;
+    }
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.5);
     position: relative;
     @media (min-width: 1000px){
-        background: url("../../assets/image/wall.jpg") no-repeat;
+        background: url("../../../assets/image/wall.jpg") no-repeat;
         background-size: 100% 100%;
     }
     @media (min-width: 500px) and (max-width: 1000px){
-        background: url("../../assets/image/wallmiddle.jpg") no-repeat;
+        background: url("../../../assets/image/wallmiddle.jpg") no-repeat;
         background-size: 100% 100%;
     }
     @media (max-width: 500px){
-        background: url("../../assets/image/wallsmall.jpg") no-repeat;
+        background: url("../../../assets/image/wallsmall.jpg") no-repeat;
         background-size: 100% 100%;
     }
     #contentHeader{
@@ -24,7 +28,7 @@
             width: 15vh;
             height: 15vh;
         }
-        background: url("../../assets/image/head.jpg") no-repeat;
+        background: url("../../../assets/image/head.jpg") no-repeat;
         background-size: 100% 100%;
         border-radius: 50%;
         margin: 0 auto;

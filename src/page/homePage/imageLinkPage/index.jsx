@@ -7,8 +7,8 @@ class ImageLinkPage extends React.Component{
             <div className="imageLinkDom">
                 <div className="imageLinkCover"></div>
                 <img className="imageLink" src={this.props.childImage}></img>
-                <div className="imageLinkTipDom">
-                    <div className="imageLinkTip">{this.props.tips}</div>
+                <div name={this.props.domName} className="imageLinkTipDom">
+                    <div name={this.props.domName} className="imageLinkTip">{this.props.tips}</div>
                 </div>
             </div>
         )

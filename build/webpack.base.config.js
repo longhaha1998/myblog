@@ -27,6 +27,7 @@ module.exports = {
                           // by default it uses publicPath in webpackOptions.output
                           // publicPath: 'static/css/',
                           // hmr: process.env.NODE_ENV === 'development',
+                          hmr: true
                         },
                     },
                     {

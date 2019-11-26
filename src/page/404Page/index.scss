@@ -1,0 +1,36 @@
+#cw{
+	padding-top: 120px ;
+	background-color: #76c5f0;
+	width: 100vw;
+	min-height: 100vh;
+	font-size: 24px;
+	font-family: "Microsoft Yahei";
+	a{
+		text-decoration:none;color:#333;
+	}
+	a:hover{
+		color:#1974A1;
+	}
+	.cw-1 {
+		background-image: url(img/404-1.png);
+		background-repeat: no-repeat;
+		background-position: center;
+		height: 494px;
+		width: 100%;
+		@media(max-aspect-ratio:1/1){
+			background-size: 100% 100%;
+		}
+	}
+	.cw-2{
+		margin-top: 60px ;
+		display: flex;
+		justify-content: center;
+		.cw-3{
+			height: 48px;
+			line-height: 48px;
+			padding-left: 60px;
+			background-image: url(img/404-2.png);
+			background-repeat: no-repeat;
+		}
+	}
+}

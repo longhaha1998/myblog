@@ -3,27 +3,36 @@ import { HashRouter, Switch, Route, Redirect, Link} from 'react-router-dom'
 import { inject, observer } from "mobx-react"
 const WelcomePage = React.lazy(() => import('@/page/welcomePage'));
 const HomePage = React.lazy(() => import('@/page/HomePage'));
-const LoadingPage = React.lazy(() => import('./loadingPage'));
+const NotFoundPage = React.lazy(() => import('@/page/404Page'));
+const LoginPage = React.lazy(() => import('@/page/login'));
+import LoadingPage from './loadingPage';
 
 
 @inject("WelcomeAnimStore")// 注入mobx实例到props
-@observer// UserListStore实例和组件双向绑定
+@observer// 实例和组件双向绑定
 class AppPage extends React.Component {
 
     render(){
         const { WelcomeAnimStore } = this.props;
         WelcomeAnimStore.changeIfPlayAnim(sessionStorage.getItem("havePalyedAnim"));
         return (
-            <Suspense fallback={<LoadingPage />}>
-                <HashRouter>
-                    <Switch>
-                        <Route exact path="/" render={(routeProps) => WelcomeAnimStore.ifPlayedAnim?<Redirect to="/home"/>:<WelcomePage {...routeProps}/>} />
-                        <Route path="/home">
-                            <HomePage />
+            <HashRouter>
+                <Switch>
+                    <Route exact path="/" render={(routeProps) => WelcomeAnimStore.ifPlayedAnim? <Redirect to="/home"/> :(<Suspense fallback={<LoadingPage />}><WelcomePage {...routeProps}/></Suspense>)}/>
+                    <Route path="/home" render={(routeProps) => (<Suspense fallback={<LoadingPage />}><HomePage {...routeProps}/></Suspense>)} />
+                    <Route path="/login">
+                        <LoginPage />
+                    </Route>
+                    <Route path="/404">
+                        <Suspense fallback={<LoadingPage />}>
+                                <NotFoundPage />
+                            </Suspense>
                         </Route>
-                    </Switch>
-                </HashRouter>
-            </Suspense>
+                    <Route path="*">
+                        <Redirect to="/404"></Redirect>
+                    </Route>
+                </Switch>
+            </HashRouter>
         )
     }
 }
