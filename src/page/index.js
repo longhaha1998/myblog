@@ -11,6 +11,9 @@ import LoadingPage from './loadingPage';
 @inject("WelcomeAnimStore")// 注入mobx实例到props
 @observer// 实例和组件双向绑定
 class AppPage extends React.Component {
+    constructor(props){
+        super(props);
+    }
 
     render(){
         const { WelcomeAnimStore } = this.props;
@@ -20,14 +23,12 @@ class AppPage extends React.Component {
                 <Switch>
                     <Route exact path="/" render={(routeProps) => WelcomeAnimStore.ifPlayedAnim? <Redirect to="/home"/> :(<Suspense fallback={<LoadingPage />}><WelcomePage {...routeProps}/></Suspense>)}/>
                     <Route path="/home" render={(routeProps) => (<Suspense fallback={<LoadingPage />}><HomePage {...routeProps}/></Suspense>)} />
-                    <Route path="/login">
-                        <LoginPage />
-                    </Route>
+                    <Route path="/login" render={(routeProps) => (<Suspense fallback={<LoadingPage />}><LoginPage {...routeProps}/></Suspense>)} />
                     <Route path="/404">
                         <Suspense fallback={<LoadingPage />}>
                                 <NotFoundPage />
-                            </Suspense>
-                        </Route>
+                        </Suspense>
+                    </Route>
                     <Route path="*">
                         <Redirect to="/404"></Redirect>
                     </Route>

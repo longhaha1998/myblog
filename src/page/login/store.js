@@ -1,16 +1,34 @@
-import { observable, action, autorun } from "mobx";
+import { observable, action, autorun, runInAction } from "mobx";
 
 class UserStore{
     @observable userName;
     @observable password;
     @observable repassword;
     @observable ifSignUp;
+    @observable nameNull;
+    @observable passwordNull;
+    @observable nameErr;
+    @observable passwordErr;
+    @observable repasswordErr;
+    @observable registerErr;
+    @observable signInAnim;
+    @observable signUpAnim;
+    @observable timeErr;
 
     constructor(){
         this.userName = "";
         this.password = "";
         this.repassword = "";
         this.ifSignUp = false;
+        this.nameNull = false;
+        this.passwordNull = false;
+        this.nameErr = false;
+        this.passwordErr = false;
+        this.repasswordErr = false;
+        this.registerErr = false;
+        this.signInAnim = false;
+        this.signUpAnim = false;
+        this.timeErr = false;
     }
 
     @action updateUserName(val){
@@ -28,8 +46,41 @@ class UserStore{
     @action toggleIfSignUp(val){
         this.ifSignUp = val;
     }
+
+    @action toggleSignInAnim(){
+        this.signInAnim = !this.signInAnim;
+    }
+
+    @action toggleSignUpAnim(){
+        this.signUpAnim = !this.signUpAnim;
+    }
+
+    @action initial(){
+        this.userName = "";
+        this.password = "";
+        this.repassword = "";
+        this.nameNull = false;
+        this.passwordNull = false;
+        this.nameErr = false;
+        this.passwordErr = false;
+        this.repasswordErr = false;
+        this.registerErr = false;
+        this.signInAnim = false;
+        this.signUpAnim = false;
+        this.timeErr = false;
+    }
+
+    @action changeStatus(property){
+        this[property] = true;
+        setTimeout(() => {
+            runInAction(() => {
+                this[property] = false;
+            })
+        },1200);
+    }
 }
 
+let userStore = new UserStore()
 // let mbxData = new MobxData();
 // autorun(() => {
 //     console.log("autorun")
@@ -41,4 +92,4 @@ class UserStore{
 // })
 // export default mbxData;
 
-export default new UserStore();
+export default userStore;

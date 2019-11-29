@@ -13,4 +13,6 @@ class WelcomeAnimStore {
     }
 }
 
-export default new WelcomeAnimStore();
+let welcomeAnimStore = new WelcomeAnimStore();
+
+export default welcomeAnimStore;

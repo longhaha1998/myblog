@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config build/webpack.prod.config.js",
-    "dev": "webpack-dev-server --inline --config build/webpack.dev.config.js --host 192.168.43.40 --open"
+    "dev": "webpack-dev-server --inline --config build/webpack.dev.config.js --host 172.22.108.26 --open"
   },
   "keywords": [],
   "author": "",
@@ -43,10 +43,20 @@
   },
   "dependencies": {
     "axios": "^0.19.0",
+    "js-base64": "^2.5.1",
     "mobx": "^5.15.0",
     "mobx-react": "^6.1.4",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-router-dom": "^5.1.2"
-  }
+  },
+  "browserslist": [
+    "last 10 version",
+    "> 1%",
+    "ie >= 8",
+    "ff >= 15",
+    "iOS >= 8",
+    "Android >= 9",
+    "Edge >=15"
+  ]
 }

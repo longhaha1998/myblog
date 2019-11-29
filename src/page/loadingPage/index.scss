@@ -14,8 +14,8 @@
     justify-content: center;
 }
 #LoadingBox > div {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   margin: 0 10px;
   background-color: #3366CC;
   border-radius: 100%;
@@ -24,10 +24,8 @@
   animation-fill-mode: both;
 }
 #LoadingBox .bounce1 {
-  -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
 #LoadingBox .bounce2 {
-  -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
 }

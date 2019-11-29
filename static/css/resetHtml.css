@@ -6,6 +6,10 @@ html,body,#app{
     width: 100%;
     height: 100%;
 }
+#app{
+  position: relative;
+  z-index: 0;
+}
 ::-webkit-scrollbar{
   height: 6px;
   width: 6px;
@@ -41,6 +45,7 @@ html,body,#app{
   width: 10px;
   height: 10px;
 }
+
   
 html, body, div, ul, li, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, form, input, textarea, th, td, select {
     margin: 0;

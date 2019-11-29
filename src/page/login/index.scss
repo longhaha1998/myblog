@@ -1,6 +1,7 @@
 #loginDom{
     width: 100vw;
     height: 100vh;
+    min-height: 725px;
     display: flex;
     align-items: center;
     background-color: rgba($color:#CCCCCC, $alpha:0.3);
@@ -48,6 +49,12 @@
                 margin-top: 60px;
                 .group{
                     margin-bottom: 50px;
+                    .errorMsg{
+                        display: block;
+                        margin-top: 10px;
+                        margin-left: 10px;
+                        color: red;
+                    }
                     .check{
                         display: none;
                     }
