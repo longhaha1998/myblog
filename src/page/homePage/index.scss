@@ -103,7 +103,7 @@
                         transform: translate(0px, 50px);
                         opacity: 0;
                         transition:transform 0.5s ease 0s, opacity 0.5s ease 0s;
-                        a{
+                        a, #changeAvatar{
                             padding: 0;
                             margin: 0;
                             cursor: pointer;
@@ -122,6 +122,12 @@
                         }
                         a:hover{
                             background-color: rgba($color:#ccc, $alpha:0.5);
+                        }
+                        #changeAvatar:hover{
+                            background-color: rgba($color:#ccc, $alpha:0.5);
+                        }
+                        #avatarFile{
+                            display: none;
                         }
                     }
                 }

@@ -29,10 +29,13 @@ class App extends React.Component {
             const {CurrentUser: currentUser} = {...store};
             let tempCurrentUser = sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser');
             if(tempCurrentUser){
-                currentUser.changeUserName(tempCurrentUser);
-                currentUser.toggleIfLogined(true);
+                currentUser.changeUser(JSON.parse(tempCurrentUser).username, JSON.parse(tempCurrentUser).role, true);
             }
+            let tempAvatar = sessionStorage.getItem('avatar') || localStorage.getItem('avatar');
+            currentUser.changeAvatar(JSON.parse(tempAvatar))
         }
+
+        window.getBlobURL = (window.URL && URL.createObjectURL.bind(URL)) || (window.webkitURL && webkitURL.createObjectURL.bind(webkitURL)) || window.createObjectURL;
     }
 
     render () {

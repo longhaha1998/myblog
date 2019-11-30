@@ -53,17 +53,24 @@ class SignUpDom extends React.Component{
             }else if(status ===0){
                 user.changeStatus("registerErr");
             }else{
-                sessionStorage.setItem("currentUser",res.data.username);
-                localStorage.setItem("currentUser",res.data.username);
-                currentUser.changeUserName(res.data.username);
-                currentUser.toggleIfLogined(true);
+                sessionStorage.setItem("currentUser",JSON.stringify({
+                    username:res.data.username,
+                    role:res.data.role.split(","),
+                }));
+                localStorage.setItem("currentUser",JSON.stringify({
+                    username:res.data.username,
+                    role:res.data.role.split(","),
+                }));
+                currentUser.changeUser(res.data.username, res.data.role.split(","), true);
+                this.props.history.replace('/home');
                 user.initial();
                 user.toggleIfSignUp(false);
-                this.props.history.replace('/home');
                 tipStore.changeData("注册成功","success");
             }
         }).catch((err)=>{
-            user.toggleSignUpAnim();
+            if(user.signUpAnim){
+                user.toggleSignUpAnim();
+            }
             console.log(err);
             tipStore.changeData("注册失败","fail");
         });

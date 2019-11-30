@@ -20,8 +20,47 @@ class HomePage extends React.Component{
 
     constructor(props){
         super(props);
+        this.avatarFile = React.createRef();
         this.handleClickAvatar = this.handleClickAvatar.bind(this);
         this.handleLoginOut = this.handleLoginOut.bind(this);
+    }
+
+    handleSelectFile(){
+        let files = this.avatarFile.current.files[0];
+        console.log(files);
+        if(files.size>3*1024*1024){
+            this.props.TipStore.changeData("所选文件不能超过3mb", "fail");
+        }else{
+            let formData = new FormData();
+            formData.append("file",files);
+
+            axios.post(this.context+"/postAvatar",formData,{
+                headers:{'Content-Type':'multipart/form-data'}
+            }).then(res =>{
+                const {status} = res.data;
+                if(status === 0){
+                    this.props.TipStore.changeData("头像类型只能为jpg/jpeg/png","warning");
+                }else if(status === 1){
+                    let tempReader = new FileReader();
+                    tempReader.readAsDataURL(new Blob([files],{type:res.data.mime}));
+                    tempReader.onload = ()=> {
+                        sessionStorage.setItem("avatar",JSON.stringify(tempReader.result));
+                        if(localStorage.getItem("currentUser")){
+                            localStorage.setItem("avatar",JSON.stringify(tempReader.result));
+                        }
+                        this.props.CurrentUser.changeAvatar(tempReader.result);
+                    }
+                    tempReader.onerror = ()=>{
+                        throw new Error("获取头像出错！");
+                    }
+                }else{
+                    this.props.TipStore.changeData("更换失败", "fail");
+                }
+            }).catch((err) =>{
+                console.log(err);
+                this.props.TipStore.changeData("网络原因，更换失败", "fail");
+            })
+        }
     }
 
     handleLoginOut(e){
@@ -31,9 +70,11 @@ class HomePage extends React.Component{
             username: currentUser.userName
         }).then((res) => {
             sessionStorage.removeItem("currentUser");
+            sessionStorage.removeItem("avatar");
             localStorage.removeItem("currentUser");
-            currentUser.changeUserName("");
-            currentUser.toggleIfLogined(false);
+            localStorage.removeItem("avatar");
+            currentUser.changeUser("", [], false);
+            currentUser.changeAvatar("");
             if(res.data.status === -2){
                 this.props.history.replace('/login');
                 this.props.UserStore.changeStatus("timeErr");
@@ -64,16 +105,21 @@ class HomePage extends React.Component{
                         <Link to="/home/demo">demo</Link>
                         <a id="contactMe">联系本人</a>
                         <div id="avatar">
-                            {!currentUser.userName?
+                            {!currentUser.ifLogined?
                                 <div onClick={(e) => this.handleClickAvatar(e)} id="avatarDom">
                                     <img id="avatarImg" src={defaultAvatar}></img>
                                 </div>
                                 :
                                 <div id="loginedDom">
-                                    <img id="loginedImg" src={defaultAvatar}></img>
+                                    {!currentUser.avatar?
+                                        <img id="loginedImg" src={defaultAvatar}></img>
+                                        :
+                                        <img id="loginedImg" src={currentUser.avatar}></img>
+                                    }
                                     <div id="loginOutDom">
-                                        {/* <a id="changeAvatar" onClick={}><img className="image" src={changIco}></img><span>更换头像</span></a> */}
-                                        <a id="loginOut" onClick={(e) => {this.handleLoginOut(e)}}><img className="image" src={quitIco}></img><span>退出登录</span></a>
+                                        <input ref={this.avatarFile} onChange={(e) => {this.handleSelectFile(e);}} accept=".jpg, .jpeg, .png" type="file" id="avatarFile"></input>
+                                        <label htmlFor="avatarFile" id="changeAvatar"><img className="image" src={changIco}></img><span>更换头像</span></label>
+                                        <a id="loginOut" onClick={(e) => {this.handleLoginOut(e);}}><img className="image" src={quitIco}></img><span>退出登录</span></a>
                                     </div>
                                 </div>
                             }

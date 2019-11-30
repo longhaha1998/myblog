@@ -48,27 +48,54 @@ class SignInDom extends React.Component{
             ifMemberMe: this.state.ifMemberMe
         }).then(res => {
             const {status} = res.data;
+            console.log(res.data)
             user.toggleSignInAnim();
             if(status === -1){
                 user.changeStatus("passwordErr");
             }else if(status === 0){
                 user.changeStatus("nameErr");
             }else{
-                sessionStorage.setItem("currentUser",res.data.username);
+                sessionStorage.setItem("currentUser",JSON.stringify({
+                    username:res.data.username,
+                    role:res.data.role.split(",")
+                }));
                 if(this.state.ifMemberMe){
-                    localStorage.setItem("currentUser",res.data.username);
+                    localStorage.setItem("currentUser",JSON.stringify({
+                        username:res.data.username,
+                        role:res.data.role.split(",")
+                    }));
                 }else{
                     localStorage.removeItem("currentUser");
                 }
-                currentUser.changeUserName(res.data.username);
-                currentUser.toggleIfLogined(true);
+                currentUser.changeUser(res.data.username, res.data.role.split(","), true);
+                this.props.history.replace('/home');
                 user.initial();
                 user.toggleIfSignUp(false);
-                this.props.history.replace('/home');
                 tipStore.changeData("登录成功","success");
+                axios.get(this.context+`/avatar?username=${Base64.encode(res.data.username)}`,{
+                    responseType: 'blob' 
+                }).then(avatarRes => {
+                    let tempReader = new FileReader();
+                    tempReader.readAsDataURL(new Blob([avatarRes.data],{type:res.data.mime}));
+                    tempReader.onload = ()=> {
+                        sessionStorage.setItem("avatar",JSON.stringify(tempReader.result));
+                        if(this.state.ifMemberMe){
+                            localStorage.setItem("avatar",JSON.stringify(tempReader.result));
+                        }
+                        currentUser.changeAvatar(tempReader.result);
+                    }
+                    tempReader.onerror = ()=>{
+                        throw new Error("获取头像出错！");
+                    }
+                }).catch(err => {
+                    console.log(err);
+                    tipStore.changeData("头像获取失败","fail");
+                })
             }
         }).catch((err)=>{
-            user.toggleSignInAnim();
+            if(user.signInAnim){
+                user.toggleSignInAnim();
+            }
             console.log(err);
             tipStore.changeData("登录失败","fail");
         });
