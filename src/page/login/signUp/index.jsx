@@ -42,11 +42,13 @@ class SignUpDom extends React.Component{
             return;
         }
         user.toggleSignUpAnim();
+        tipStore.toggleWaiting();
         axios.post(this.context+"/register",{
             username: Base64.encode(user.userName),
             password: Base64.encode(user.password),
         }).then(res => {
             const { status } = res.data;
+            tipStore.toggleWaiting();
             user.toggleSignUpAnim();
             if(status === -1){
                 user.changeStatus("nameErr");
@@ -70,6 +72,9 @@ class SignUpDom extends React.Component{
         }).catch((err)=>{
             if(user.signUpAnim){
                 user.toggleSignUpAnim();
+            }
+            if(tipStore.waiting){
+                tipStore.toggleWaiting();
             }
             console.log(err);
             tipStore.changeData("注册失败","fail");

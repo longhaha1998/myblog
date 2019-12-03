@@ -4,7 +4,8 @@ class TipStore{
     @observable tipData;
     @observable success;
     @observable fail;
-    @observable warning
+    @observable warning;
+    @observable waiting;
 
     @action
     changeData(val, type){
@@ -20,11 +21,17 @@ class TipStore{
         },1500);
     }
 
+    @action
+    toggleWaiting(){
+        this.waiting = !this.waiting;
+    }
+
     constructor(){
         this.tipData = "";
         this.success = false;
         this.fail = false;
         this.warning = false;
+        this.waiting = false;
     }
 }
 

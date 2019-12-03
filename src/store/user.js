@@ -5,6 +5,7 @@ class CurrentUserStore {
     @observable ifLogined;
     @observable role;
     @observable avatar;
+    @observable avatarType;
 
 
     constructor(){
@@ -12,6 +13,7 @@ class CurrentUserStore {
         this.ifLogined = false;
         this.avatar = "";
         this.role = [];
+        this.avatarType = "image/jpeg"
     }
 
     @action
@@ -37,8 +39,9 @@ class CurrentUserStore {
     }
 
     @action
-    changeAvatar(val){
+    changeAvatar(val, type){
         this.avatar = val;
+        this.avatarType = type;
     }
 }
 

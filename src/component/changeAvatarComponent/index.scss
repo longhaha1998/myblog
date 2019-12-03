@@ -1,0 +1,175 @@
+#changeAvatarDom{
+    width: 100%;
+    height: 100%;
+    min-height: 775px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .mainDom{
+        min-width: 1396px;
+        min-height: 704px;
+        width: 80vw;
+        height: 80vh;
+        border: 1px solid rgba($color: #ccc, $alpha: 0.5);
+        box-shadow: 0px 0px 10px 1px rgba($color: #000000, $alpha: 0.2);
+        .header{
+            box-sizing: border-box;
+            width: 100%;
+            height: 10%;
+            border-bottom: 1px solid rgba($color: #ccc, $alpha: 0.8);
+            box-shadow: 0px 1px 2px 0px rgba($color: #000000, $alpha: 0.2);
+            padding-left: 30px;
+            padding-right: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            a{
+                display: inline-block;
+                height: 100%;
+                line-height: 70px;
+                width: 76px;
+                font-size: 20px;
+                color: rgba(0, 0, 0, 0.5);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+            }
+            div{
+                width: 230px;
+                height: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                #selectAvatarLabel,.finishSelect{
+                    border: 1px solid rgba($color: #ccc, $alpha: 0.5);
+                    width: 100px;
+                    height: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 20px;
+                    color: rgba(0, 0, 0, 0.5);
+                    cursor: pointer;
+                }
+                #selectAvatarLabel:hover,.finishSelect:hover{
+                    background-color: rgba($color: #ccc, $alpha: 0.5);
+                }
+                #selectAvatar{
+                    display: none;
+                }
+            }
+        }
+        .content{
+            width: 100%;
+            height: 90%;
+            display: flex;
+            justify-content: space-around;
+            padding: 0px 60px 0px 60px;
+            align-items: center;
+            .clip{
+                box-sizing: content-box;
+                width: 500px;
+                height: 500px;
+                background-color: black;
+                border-radius: 4px;
+                border: 1px solid #e5e9ef;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .sourceDom{
+                    position: relative;
+                    .sourceImg{
+                        z-index: 5;
+                        position: absolute;
+                        transform: scale(1);
+                    }
+                    .shadowBox{
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(0,0,0,.3);
+                        z-index: 6;
+                        transform: scale(1);
+                    }
+                    .cropBox{
+                        width: 100%;
+                        height: 100%;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        z-index: 7;
+                        cursor: crosshair;
+                        .cropImg{
+                            position: absolute;
+                            width: 100%;
+                            height: 100%;
+                            overflow: hidden;
+                            z-index: 7;
+                            img{
+                                position: absolute;
+                            }
+                        }
+                        .cropSpanDom{
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            cursor: move;
+                            border: 1px solid #fff;
+                            z-index: 7;
+                            box-sizing: border-box;
+                            span{
+                                display: inline-block;
+                                width: 10px;
+                                height: 10px;
+                                border: 1px solid #fff;
+                                position: absolute;
+                                z-index: 7;
+                                box-sizing: border-box;                                
+                            }
+                            .lt{
+                                top: -10px;
+                                left: -10px;
+                                cursor: nw-resize;                               
+                            }
+                            .lb{
+                                bottom: -10px;
+                                left: -10px;
+                                cursor: sw-resize;
+                            }
+                            .rt{
+                                top: -10px;
+                                right: -10px;
+                                cursor: ne-resize;
+                            }
+                            .rb{
+                                right: -10px;
+                                bottom: -10px;
+                                cursor: se-resize;
+                            }
+                        }
+                    }   
+                }
+            }
+            .line{
+                height: 510px;
+                width: 2px;
+                background: #e5e9ef;
+            }
+            .preview{
+                width: 500px;
+                height: 500px;
+                border-radius: 50%;
+                background-color: black;
+                overflow: hidden;
+                position: relative;
+                img{
+                    position: absolute;
+                }
+            }
+        }
+    }
+}

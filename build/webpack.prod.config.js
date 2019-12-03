@@ -81,8 +81,9 @@ module.exports = webpackMerge(baseWebpackConfig,{
             cacheGroups: {
                 // 拆分基础插件
                 basic: {
-                    priority: 0, 
-                    test: /[\\/]node_modules[\\/](_moment|_react|_react-dom|_react-router|_react-router-dom|_mobx|_mobx-react|_axios)/,
+                    name: "common",
+                    priority: 20, 
+                    test: /[\\/]node_modules[\\/](moment|react|react-dom|react-router|react-router-dom|mobx|mobx-react|axios|base64)/,
                 },
 
                 styles: {
@@ -94,6 +95,7 @@ module.exports = webpackMerge(baseWebpackConfig,{
 
                 // 默认的配置
                 vendors: {
+                    name: "modules",
                     test: /[\\/]node_modules[\\/]/,
                     priority: -10
                 },

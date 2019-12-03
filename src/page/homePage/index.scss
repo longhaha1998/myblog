@@ -1,7 +1,7 @@
 #homeDom{
     width: 100%;
     height: 100%;
-    min-height: 100vh;
+    min-height: 880px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -10,12 +10,15 @@
         width: 100%;
         height: 8vh;
         min-width: 1080px;
+        min-height: 70px;
         display: flex;
         justify-content: space-between;
         padding:0 60px;
         background-color: white;
         border-bottom: 1px solid rgba($color: #000000, $alpha: 0.3);
         box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+        position: relative;
+        // z-index: 10;
         #headLeftDom{
             font-family: 'Bungasai';
             height: 8vh;
@@ -39,7 +42,7 @@
                 white-space: nowrap;
             }
             #contactMe{
-                cursor:pointer
+                cursor:pointer;
             }
             #contactMe:hover::after{
                 content: "";
@@ -50,7 +53,7 @@
                 height: 200px;
                 background-image: url("../../assets/image/contactMe.png");
                 background-size: 100% 100%;
-                z-index: 999;
+                z-index: 10;
                 border: 1px solid rgba($color: #000000, $alpha: 0.3);
                 box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
             }
@@ -58,6 +61,8 @@
                 box-sizing: border-box;
                 width: 8vh;
                 height: 8vh;
+                min-width: 70px;
+                min-height: 70px;
                 padding: 30px 30px 30px 30px;
                 //aspect表面层面 ratio比例 aspect-ratio 宽/高
                 @media (min-aspect-ratio : 1/1){
@@ -70,12 +75,13 @@
                     position: relative;
                     width: 100%;
                     height: 100%;
+                    border-radius: 50%;
                     #loginedImg{
                         position: absolute;
+                        z-index: 20;
                         border-radius: 50%;
                         width: 100%;
                         height: 100%;
-                        z-index: 1000;
                         transform: scale(1); 
                         transition: transform 0.2s ease 0s;
                     }
@@ -84,7 +90,7 @@
                         box-shadow: 0 0 10px 2px rgba($color: #3366CC, $alpha: 1);
                     }
                     #loginedImg:hover+#loginOutDom,#loginOutDom:hover{
-                        z-index: 999;
+                        z-index: 16;
                         opacity: 1;
                         transform: translate(0px, 0px);
                     }
@@ -97,13 +103,13 @@
                         top: 50%;
                         left: -100%;
                         padding-top: 50%;
-                        z-index: -10;
                         display: flex;
                         flex-direction: column;
                         transform: translate(0px, 50px);
                         opacity: 0;
                         transition:transform 0.5s ease 0s, opacity 0.5s ease 0s;
-                        a, #changeAvatar{
+                        z-index: -10;
+                        a,#changeAvatar{
                             padding: 0;
                             margin: 0;
                             cursor: pointer;
@@ -120,10 +126,7 @@
                                 margin-right: 10%;
                             }
                         }
-                        a:hover{
-                            background-color: rgba($color:#ccc, $alpha:0.5);
-                        }
-                        #changeAvatar:hover{
+                        a:hover,#changeAvatar:hover{
                             background-color: rgba($color:#ccc, $alpha:0.5);
                         }
                         #avatarFile{

@@ -42,13 +42,14 @@ class SignInDom extends React.Component{
             return;
         }
         user.toggleSignInAnim();
+        tipStore.toggleWaiting();
         axios.post(this.context+"/login",{
             username: Base64.encode(user.userName),
             password: Base64.encode(user.password),
             ifMemberMe: this.state.ifMemberMe
         }).then(res => {
             const {status} = res.data;
-            console.log(res.data)
+            tipStore.toggleWaiting();
             user.toggleSignInAnim();
             if(status === -1){
                 user.changeStatus("passwordErr");
@@ -79,10 +80,12 @@ class SignInDom extends React.Component{
                     tempReader.readAsDataURL(new Blob([avatarRes.data],{type:res.data.mime}));
                     tempReader.onload = ()=> {
                         sessionStorage.setItem("avatar",JSON.stringify(tempReader.result));
+                        sessionStorage.setItem("avatarType",JSON.stringify(res.data.mime));
                         if(this.state.ifMemberMe){
                             localStorage.setItem("avatar",JSON.stringify(tempReader.result));
+                            localStorage.setItem("avatarType",JSON.stringify(res.data.mime));
                         }
-                        currentUser.changeAvatar(tempReader.result);
+                        currentUser.changeAvatar(tempReader.result,res.data.mime);
                     }
                     tempReader.onerror = ()=>{
                         throw new Error("获取头像出错！");
@@ -96,8 +99,11 @@ class SignInDom extends React.Component{
             if(user.signInAnim){
                 user.toggleSignInAnim();
             }
+            if(tipStore.waiting){
+                tipStore.toggleWaiting();
+            }
             console.log(err);
-            tipStore.changeData("登录失败","fail");
+            tipStore.changeData("网络原因，登录失败","fail");
         });
     }
 
