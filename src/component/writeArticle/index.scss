@@ -1,0 +1,454 @@
+#writeDom{
+    width: 100%;
+    min-width: 1080px;
+    background-color:white;
+    display: flex;
+    position: relative;
+    #mdFileDom{
+        width: 100%;
+        height: 100%;
+        background-color:rgba($color: white, $alpha: 0.3);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        main{
+            width: 400px;
+            height: 600px;
+            background-color: white;
+            border:  1px solid rgba($color: #000000, $alpha: 0.2);
+            box-shadow: 0 2px 8px rgba(0,0,0,.2);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            .header,.footer,.content{
+                width: 100%;
+                margin: 0;
+                font-size: 16px;
+                line-height: 21px;
+                font-weight: 500;
+                color: #4d4d4d;
+                padding: 13px 16px;
+                border-radius: 4px 4px 0 0;
+                color: #595959;
+                border-bottom: 1px solid #d9d9d9;                
+            }
+            .header{
+                height: 50px;
+            }
+            .content{
+                width: 100%;
+                flex-grow: 1;
+                overflow: auto;
+                ul{
+                    margin-bottom: 30px;
+                }
+            }
+            .footer{
+                height: 60px;
+                width: 100%;
+                text-align: center;
+                a{                
+                    font-weight: 600;
+                    color: #3366CC;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    #mdDom{
+        flex-basis: 50%;
+        flex-grow: 1;
+        height: 88vh;
+        min-height: 830px;
+        background-color: rgba($color: white, $alpha: 0.3);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        #mdMain{
+            flex: 100%;
+            flex-shrink: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            #mdInput{
+                box-sizing: border-box;
+                flex-shrink: 0;
+                width: 100%;
+                padding: 30px 0px 30px 30px;
+                margin-bottom: 0;
+                border: none;
+                font-size: 30px;
+                font-weight: 500;
+                line-height: 30px;
+                height: 60px;
+                box-shadow: none;
+                color: #595959;
+                background-color: white;
+                outline: none;
+                border-radius: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            #mdUl{
+                width: 100%;
+                height: 40px;
+                background-color: #d9d9d9;
+                padding-left: 30px;
+                padding-right: 30px;
+                display: flex;
+                #mdSwitchLi{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-left: 20px;
+                    color:#666;
+                    #mdSwitch{
+                        position: relative;
+                        display: inline-block;
+                        width: 50px;
+                        height: 24px;
+                        margin-left: 5px;
+                        input {
+                            display:none;
+                        }
+                        .slider {
+                            position: absolute;
+                            cursor: pointer;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            bottom: 0;
+                            background-color: #ccc;
+                            transition: .4s;
+                        }
+                        .slider:before {
+                            position: absolute;
+                            content: "";
+                            height: 16px;
+                            width: 16px;
+                            left: 4px;
+                            bottom: 4px;
+                            background-color: white;
+                            transition: .4s;
+                        }
+                        input:checked + .slider {
+                            background-color: #2196F3;
+                        }
+                        input:checked + .slider:before {
+                            transform: translateX(26px);
+                        }
+                        .slider.round,.slider.round:before{
+                            border-radius: 34px;
+                        }
+                    }
+                }
+                #mdSelectLi{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-left: 20px;
+                    color:#666;
+                    #mdSelect{
+                        /*清除select默认样式*/
+                        appearance:none;
+                        -moz-appearance:none;
+                        -webkit-appearance:none;
+                        -ms-appearance:none;
+                        margin-left: 6px;
+                        position: relative;
+                        border:1px solid #CCC;
+                        border-radius: 4px;
+                        width:100px;
+                        height:24px;
+                        line-height: 24px;
+                        padding-left: 8px;
+                        padding-right: 6px;
+                        /*自定义箭头的样式，记得背景一定要加 白色或其他*/
+                        background:url("../../assets/image/select.png") no-repeat scroll right center rgba(255, 255, 255,0.8);
+                        background-origin: content-box;
+                        /*ie下,原默认的箭头样式还是会显示，所以这里把自定义的样式给去除了*/
+                        outline:none;
+                    }
+                }
+                li{
+                    a,#insertPic{
+                        display: inline-block;
+                        width: 40px;
+                        height: 40px;
+                        cursor: pointer;
+                        position: relative;
+                    }
+                    a:hover,#insertPic:hover{
+                        background-color: #595959;
+                    }
+                    #mdPic{
+                        display: none;
+                    }
+                }
+                .mdRightLi{
+                    margin-left: auto;
+                }
+                #insertPic::before{
+                    content: url('../../assets/image/pic.png');
+                }
+                #insertPic:hover::before{
+                    content: url('../../assets/image/pic_hover.png');
+                }
+                #mdFile::before{
+                    content: url('../../assets/image/md.png');
+                }
+                #mdFile:hover::before{
+                    content: url('../../assets/image/md_hover.png');
+                }
+                #mdIfPre::before{
+                    content: url('../../assets/image/pre.png');
+                }
+                #mdIfPre:hover::before{
+                    content: url('../../assets/image/pre_hover.png');
+                }
+                #mdDraft::before{
+                    content: url('../../assets/image/draft.png');
+                }
+                #mdDraft:hover::before{
+                    content: url('../../assets/image/draft_hover.png');
+                }
+                #mdPublish::before{
+                    content: url('../../assets/image/save.png');
+                }
+                #mdPublish:hover::before{
+                    content: url('../../assets/image/save_hover.png');
+                }
+                #insertPic::before, #insertPic:hover::before,#mdFile::before, #mdFile:hover::before,#mdIfPre::before, #mdIfPre:hover::before,#mdDraft::before,#mdDraft:hover::before,#mdPublish::before, #mdPublish:hover::before{
+                    display: inline-block;
+                    position: absolute;
+                    height: 24px;
+                    width: 24px;
+                    top: 50%;
+                    left: 50%;
+                    margin-left: -12px;
+                    margin-top: -12px;
+                }
+                #insertPic:hover::after, #mdFile:hover::after, #mdIfPre:hover::after, #mdDraft:hover::after, #mdPublish:hover::after{
+                    display: inline-block;
+                    position: absolute;
+                    height: 40px;
+                    width: 120px;
+                    border-radius: 6px;
+                    color: white;
+                    font-weight: 600;
+                    font-size: 20px;
+                    line-height: 40px;
+                    text-align: center;
+                    background-color: rgba($color: #000000, $alpha: 0.6);
+                    top: -43px;
+                }
+                #insertPic:hover::after{
+                    content: "插入图片";
+                }
+                #mdFile:hover::after{
+                    width: 200px;
+                    content: "markDown语法";
+                }
+                #mdIfPre:hover::after{
+                    content: "预览";
+                }
+                #mdDraft:hover::after{
+                    content: "保存草稿";
+                }
+                #mdPublish:hover::after{
+                    left: -80px;
+                    content: "保存发布";
+                }
+            }
+            #mdEditor{
+                box-sizing: border-box;
+                width: 100%;
+                height: 100%;
+                padding-left: 30px;
+                padding-top: 30px;
+                width: 100%;
+                margin-bottom: 0;
+                resize: none;
+                color: #333;
+                background-color: white;
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 30px;
+                border: none;
+                outline: none;
+                overflow: auto;
+            }
+        }
+    }
+    #mdView{
+        box-sizing: border-box;
+        flex-basis: 50%;
+        height: 88vh;
+        min-height: 830px;
+        overflow: auto;
+        background-color: #fcfaf2;
+        padding-left: 30px;
+        padding-top: 30px;
+        font-size: 24px;
+        overflow-wrap: break-word;
+        h1{
+            padding-bottom: 30px;
+        }
+        #mdViewDom{
+            *{
+                margin-bottom: 10px;
+            }
+            p {
+                display: block;
+                margin-block-start: 1em;
+                margin-block-end: 1em;
+                margin-inline-start: 0px;
+                margin-inline-end: 0px;
+            }
+            hr {
+                box-sizing: content-box;
+                height: 0;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                border: 0;
+                border-top: 1px solid #eee;
+            }
+            blockquote {
+                padding: 10px 20px;
+                margin: 0 0 20px;
+                font-size: 20px;
+                border-left: 5px solid rgb(199, 199, 199);
+                background-color: rgba(199, 199, 199, 0.2);
+            }
+            code {
+                padding: 2px 4px;
+                font-size: 90%;
+                color: #c7254e;
+                background-color: #f9f2f4;
+                border-radius: 4px;
+            }
+            pre {
+                display: block;
+                padding: 9.5px;
+                margin: 0 0 10px;
+                font-size: 13px;
+                line-height: 1.42857143;
+                color: #333;
+                word-break: break-all;
+                word-wrap: break-word;
+                background-color: #f5f5f5;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                code{
+                    padding: 0;
+                    font-size: inherit;
+                    color: inherit;
+                    white-space: pre-wrap;
+                    background-color: transparent;
+                    border-radius: 0;
+                }
+            }
+            ul, ol {
+                margin-top: 0;
+                margin-bottom: 10px;
+            }
+            ol {
+                display: block;
+                list-style-type: decimal;
+                margin-block-start: 1em;
+                margin-block-end: 1em;
+                margin-inline-start: 0px;
+                margin-inline-end: 0px;
+                padding-inline-start: 40px;
+            }
+            ul {
+                display: block;
+                list-style-type: disc;
+                margin-block-start: 1em;
+                margin-block-end: 1em;
+                margin-inline-start: 0px;
+                margin-inline-end: 0px;
+                padding-inline-start: 40px;
+            }
+            ul ul {
+                list-style-type: circle;
+                margin-block-start: 0px;
+                margin-block-end: 0px;
+            }
+            li {
+                display: list-item;
+                text-align: -webkit-match-parent;
+            }
+            th {
+                display: table-cell;
+                vertical-align: inherit;
+                font-weight: bold;
+                text-align: left;
+            }
+            table {
+                background-color: transparent;
+                display: table;
+                border-collapse: separate;
+                border-spacing: 2px;
+                border-color: grey;
+                box-sizing: border-box;
+                tbody {
+                    display: table-row-group;
+                    vertical-align: middle;
+                    border-color: inherit;
+                    tr{
+                        display: table-row;
+                        vertical-align: inherit;
+                        border-color: inherit;
+                        th{
+                            vertical-align: bottom;
+                            border-bottom: 2px solid #ddd;
+                        }
+                    }
+                }
+            }
+            table > thead > tr > th, table > tbody > tr > th, table > tfoot > tr > th, table > thead > tr > td, table > tbody > tr > td, table > tfoot > tr > td {
+                padding: 8px;
+                line-height: 1.42857143;
+                vertical-align: top;
+                border-top: 1px solid #ddd;
+            }
+            table > tbody > tr:nth-child(odd) > td, table > tbody > tr:nth-child(odd) > th {
+                background-color: #f9f9f9;
+            }
+            a {
+                color: #428bca;
+                text-decoration: none;
+                background: transparent;
+                cursor: pointer;
+            }
+            img{
+                max-width: 50%;
+                vertical-align: middle;
+                border: 0;
+            }
+            dl {
+                display: block;
+                margin-block-start: 1em;
+                margin-block-end: 1em;
+                margin-inline-start: 0px;
+                margin-inline-end: 0px;
+                margin-top: 0;
+                margin-bottom: 20px;
+            }
+            dt {
+                display: block;
+                font-weight: bold;
+            }
+            dt, dd {
+                line-height: 1.42857143;
+            }
+            dd {
+                display: block;
+                margin-inline-start: 40px;
+            }
+        }
+    }
+}

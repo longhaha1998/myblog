@@ -4,7 +4,6 @@ import './index.scss';
 class LoadingPage extends React.Component{
 
     render(){
-        console.log(this.props.ifWaiting)
         return(
             <div id="LoadingBox" style={this.props.ifWaiting && {opacity:"0.5",position:'absolute',zIndex:"9999",top:0,left:0,backgroundColor:'white'}}>
 	            <div className="bounce1"></div>

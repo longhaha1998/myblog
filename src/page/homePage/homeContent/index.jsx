@@ -7,8 +7,10 @@ import LoadingPage from '../../loadingPage';
 import imageA from '@/assets/image/2.jpg';
 import imageB from '@/assets/image/5.jpg';
 import imageC from '@/assets/image/8.jpg';
+import { inject, observer } from "mobx-react";
 
-
+@inject("CurrentUser", "TipStore")
+@observer
 class HomeContent extends React.Component{
     constructor(props){
         super(props);
@@ -16,6 +18,16 @@ class HomeContent extends React.Component{
     }
 
     handleClickImg(e){
+        if(e.target.getAttribute("name") === "/writeArticle"){
+            if(!this.props.CurrentUser.ifLogined){
+                this.props.TipStore.changeData("请先登录", "warning");
+                return;
+            }
+            if(!(this.props.CurrentUser.role.indexOf("2")>-1)){
+                this.props.TipStore.changeData("无权限，请联系管理员", "fail");
+                return;
+            }
+        }
         this.props.history.push(this.props.location.pathname+e.target.getAttribute("name"));
     }
 
@@ -36,7 +48,7 @@ class HomeContent extends React.Component{
                         <div id="imageLinkBox">
                             <ImageLinkPage domName="/article" childImage={imageA} tips={"无限魅力的js"}/>
                             <ImageLinkPage domName="/demo" childImage={imageB} tips={"有趣的demo"}/>
-                            <ImageLinkPage domName="/article" childImage={imageC} tips={"其他文章"}/>
+                            <ImageLinkPage domName="/writeArticle" childImage={imageC} tips={"写文章"}/>
                         </div>
                     </Suspense>
                 </main>

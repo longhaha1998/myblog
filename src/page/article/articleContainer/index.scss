@@ -1,0 +1,89 @@
+.articleContentDom{
+    width: 80%;
+    height: 240px;
+    background-color: rgba($color:white, $alpha: 1);
+    border-radius: 4px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+    border-top: 1px solid rgba($color: #000000, $alpha: 0.1);
+    margin-top:30px;
+    display: flex;
+    flex-direction: column;
+    color: #5f5f5f;
+    header{
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 30%;
+        padding-left: 30px;
+        padding-right: 30px;
+        h1{
+            flex-basis: 75%;
+            font-weight: 500;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            abbr{
+                text-decoration: none;
+            }
+        }
+        a{
+            flex-basis: 82px;
+            font-size: 18px;
+            color: rgba($color: #777, $alpha: 0.6);
+            font-weight: 600;
+            text-align: right;
+            cursor: pointer;
+        }
+        a:hover{
+            color: #3366cc;
+        }
+    }
+    main{
+        flex-grow: 1;
+        border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+        display: flex;
+        justify-content: space-between;
+        padding-left: 30px;
+        padding-right: 30px;
+        div{
+            box-sizing: border-box;
+            flex-basis: 80%;
+            height: 100px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            overflow: hidden;
+            overflow-wrap: break-word;
+            // text-overflow: ellipsis;
+            // white-space: nowrap;
+        }
+        img{
+            flex-basis: 100px;
+            height: 100px;
+        }
+    }
+    footer{
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        height: 20%;
+        padding-left: 30px;
+        padding-right: 30px;
+        img{
+            margin-right: 10px;
+        }
+        span{
+            font-size: 14px;
+            color: rgba($color: #777, $alpha: 0.7);
+            margin-right: 20px;
+        }
+        .personalArticle{
+            color: red;
+        }   
+        span:last-child{
+            margin-right: 0;
+            margin-left: auto;
+        }
+    }
+}

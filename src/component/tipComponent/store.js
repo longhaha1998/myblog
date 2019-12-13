@@ -18,7 +18,7 @@ class TipStore{
                 this.fail = false;
                 this.warning = false;
             })
-        },1500);
+        },1000);
     }
 
     @action

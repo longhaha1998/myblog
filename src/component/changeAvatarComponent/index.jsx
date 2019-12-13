@@ -3,6 +3,7 @@ import { inject, observer } from "mobx-react";
 import {IPContext} from './../../context';
 import backUrl from './../../assets/image/back.png';
 import defaultAvatar from "./../../assets/image/default.jpg";
+import LoadingPage from "@/page/loadingPage";
 import "./index.scss"
 
 @inject("CurrentUser", "TipStore")
@@ -45,6 +46,7 @@ class ChangeAvatarComponent extends React.Component{
         this.rbScaling = false;
         this.state={
             avatar: defaultAvatar,
+            loading: true
         };
         this.initScale = this.initScale.bind(this);
         this.changeWH = this.changeWH.bind(this);
@@ -111,7 +113,7 @@ class ChangeAvatarComponent extends React.Component{
             this.rtScaling = false;
             this.lbScaling = false;
             this.rbScaling = false;
-        },false)
+        },false);
     }
 
     componentWillUnmount(){
@@ -609,10 +611,16 @@ class ChangeAvatarComponent extends React.Component{
                         let tempScale = Math.floor(img.naturalHeight/scale)/500;
                         this.changeWH(this.preRef.current, Math.floor(500/tempScale)+"px", Math.floor(Math.floor(img.naturalHeight/scale)/tempScale)+"px");
                     }
+                    this.setState({
+                        loading: false
+                    });
                 }else{
                     this.preRef.current.onload = () => {
                         let tempScale = Math.floor(img.naturalHeight/scale)/500;
                         this.changeWH(this.preRef.current, Math.floor(500/tempScale)+"px", Math.floor(Math.floor(img.naturalHeight/scale)/tempScale)+"px");
+                        this.setState({
+                            loading: false
+                        });
                     }
                 }
             }
@@ -630,10 +638,16 @@ class ChangeAvatarComponent extends React.Component{
                         let tempScale = Math.floor(img.naturalWidth/scale)/500;
                         this.changeWH(this.preRef.current, Math.floor(Math.floor(img.naturalWidth/scale)/tempScale)+"px", Math.floor(500/tempScale)+"px");
                     }
+                    this.setState({
+                        loading: false
+                    });
                 }else{
                     this.preRef.current.onload = () => {
                         let tempScale = Math.floor(img.naturalWidth/scale)/500;
                         this.changeWH(this.preRef.current, Math.floor(Math.floor(img.naturalWidth/scale)/tempScale)+"px", Math.floor(500/tempScale)+"px");
+                        this.setState({
+                            loading: false
+                        });
                     }
                 }
             }
@@ -667,52 +681,68 @@ class ChangeAvatarComponent extends React.Component{
         targetCanvas.width = tempWidth;
         targetCanvas.height = tempHeight;
         targetCanvas.getContext('2d').drawImage(sourceCanvas, tempLeft, tempTop, tempWidth, tempHeight, 0, 0, tempWidth, tempHeight);
-        targetCanvas.toBlob((tempBlob) => {
-            let tempFile = new File([tempBlob],this.fileName?this.fileName:"avatar.jpg",{lastModified:Date.now(),type:this.fileType?this.fileType:"image/jpeg"});
-            this.props.postAvatar(tempFile);
-        },this.fileType?this.fileType:"image/jpeg");
-        // let tempBlob = new Blob([targetCanvas.toDataURL(this.fileType?this.fileType:"image/jpeg")],{type:this.fileType?this.fileType:"image/jpeg"});
-        // let tempFile = new File([tempBlob],this.fileName?this.fileName:"avatar.jpg",{lastModified:Date.now(),type:this.fileType?this.fileType:"image/jpeg"});
+        if(targetCanvas.toBlob){
+            targetCanvas.toBlob((tempBlob) => {
+                let tempFile = new File([tempBlob],this.fileName?this.fileName:"avatar.jpg",{lastModified:Date.now(),type:this.fileType?this.fileType:"image/jpeg"});
+                this.props.postAvatar(tempFile);
+            },this.fileType?this.fileType:"image/jpeg");
+        }else{
+            this.props.TipStore.changeData("当前浏览器不支持该功能","warning");
+            // let tempURL = targetCanvas.toDataURL(this.fileType?this.fileType:"image/jpeg");
+            // let arr = tempURL.split(','),
+            //     bstr = atob(arr[1]),
+            //     n = bstr.length,
+            //     u8arr = new Uint8Array(n);
+            // while (n--) {
+            //     u8arr[n] = bstr.charCodeAt(n);
+            // }
+            // let tempBlob = new Blob([u8arr],{type:this.fileType?this.fileType:"image/jpeg"});
+            // let tempFile = new File([tempBlob],this.fileName?this.fileName:"avatar.jpg",{lastModified:Date.now(),type:this.fileType?this.fileType:"image/jpeg"});
+            // this.props.postAvatar(tempFile);
+        }
     }
 
     render(){
         let {CurrentUser:currentUser} = this.props;
         return(
-            <div id="changeAvatarDom">
-                <main className="mainDom">
-                    <header className="header">
-                        <a onClick={(e) => {this.handleBack(e)}}><img src={backUrl}></img>返回</a>
-                        <div>
-                            <label htmlFor="selectAvatar" id="selectAvatarLabel"><span>选择头像</span></label>
-                            <input ref={this.avatarFile} onChange={(e) => {this.handleSelectAvatar(e);}} accept=".jpg, .jpeg, .png" type="file" id="selectAvatar"></input>
-                            <label onClick={this.handleFinishSelect} className="finishSelect">确定</label>
-                        </div>
-                    </header>
-                    <div className="content">
-                        <div className="clip">
-                            <div ref={this.sourceDom} className="sourceDom">
-                                <img ref={this.sourceRef} src={currentUser.avatar?currentUser.avatar:defaultAvatar} className='sourceImg'></img>
-                                <div className="shadowBox"></div>
-                                <div ref={this.cropDom} className="cropBox">
-                                    <div ref={this.moveBox} className="cropImg" style={{left:0,top:0}}>
-                                        <img ref={this.cropRef} src={currentUser.avatar?currentUser.avatar:defaultAvatar}/>
-                                    </div>
-                                    <div ref={this.adjustBox} className="cropSpanDom" style={{left:0,top:0}}>
-                                        <span ref={this.lt} className="lt"></span>
-                                        <span ref={this.rt} className="rt"></span>
-                                        <span ref={this.lb} className="lb"></span>
-                                        <span ref={this.rb} className="rb"></span>
+            <React.Fragment>
+                {this.state.loading && <LoadingPage />}
+                <div id="changeAvatarDom" style={this.state.loading?{display:"none"}:{}}>
+                    <main className="mainDom">
+                        <header className="header">
+                            <a onClick={(e) => {this.handleBack(e)}}><img src={backUrl}></img>返回</a>
+                            <div>
+                                <label htmlFor="selectAvatar" id="selectAvatarLabel"><span>选择头像</span></label>
+                                <input ref={this.avatarFile} onChange={(e) => {this.handleSelectAvatar(e);}} accept=".jpg, .jpeg, .png" type="file" id="selectAvatar"></input>
+                                <label onClick={this.handleFinishSelect} className="finishSelect">确定</label>
+                            </div>
+                        </header>
+                        <div className="content">
+                            <div className="clip">
+                                <div ref={this.sourceDom} className="sourceDom">
+                                    <img ref={this.sourceRef} src={currentUser.avatar?currentUser.avatar:defaultAvatar} className='sourceImg'></img>
+                                    <div className="shadowBox"></div>
+                                    <div ref={this.cropDom} className="cropBox">
+                                        <div ref={this.moveBox} className="cropImg" style={{left:0,top:0}}>
+                                            <img ref={this.cropRef} src={currentUser.avatar?currentUser.avatar:defaultAvatar}/>
+                                        </div>
+                                        <div ref={this.adjustBox} className="cropSpanDom" style={{left:0,top:0}}>
+                                            <span ref={this.lt} className="lt"></span>
+                                            <span ref={this.rt} className="rt"></span>
+                                            <span ref={this.lb} className="lb"></span>
+                                            <span ref={this.rb} className="rb"></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div className="line"></div>
+                            <div className="preview">
+                                <img ref={this.preRef} src={currentUser.avatar?JSON.parse(localStorage.getItem("avatar")):defaultAvatar} style={{left:0,top:0}}></img>
+                            </div>
                         </div>
-                        <div className="line"></div>
-                        <div className="preview">
-                            <img ref={this.preRef} src={currentUser.avatar?JSON.parse(localStorage.getItem("avatar")):defaultAvatar} style={{left:0,top:0}}></img>
-                        </div>
-                    </div>
-                </main>
-            </div>
+                    </main>
+                </div>
+            </React.Fragment>
         )
     }
 }

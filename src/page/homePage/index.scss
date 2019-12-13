@@ -1,11 +1,10 @@
 #homeDom{
     width: 100%;
-    height: 100%;
-    min-height: 880px;
+    min-width: 1080px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    overflow: auto;
+    overflow: visible;
     #homeHead{
         width: 100%;
         height: 8vh;
@@ -24,6 +23,10 @@
             height: 8vh;
             line-height: 8vh;
             font-size: 30px;
+            a{
+                height: 8vh;
+                line-height: 8vh;
+            }
         }
         #headRightDom{
             display: flex;
@@ -119,6 +122,7 @@
                             line-height: 50px;
                             display: flex;
                             align-items: center;
+                            color: rgba($color: #969696, $alpha: 1.0);
                             .image{
                                 height: 14px;
                                 width: 14px;
@@ -161,6 +165,9 @@
         height: 4vh;
         color: black;
         line-height: 4vh;
-        text-align: center;
+        min-height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }

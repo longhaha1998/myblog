@@ -1,5 +1,99 @@
 #articleBox{
     width: 100%;
-    height: 88vh;
-    min-height: 775px;
+    min-width: 1080px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    #articleMain{
+        background-color: white;
+        width: 80%;
+        height: 88vh;
+        min-height: 820px;
+        display: flex;
+        align-items: flex-start;
+        #articleNav{
+            margin-top: 60px;
+            background-color: white;
+            width: 20%;
+            display: flex;
+            flex-direction: column;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+            // border: 1px solid rgba($color: #000000, $alpha: 0.3);
+            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+            a{
+                text-align: center;
+                text-decoration: none;
+                width: 100%;
+                height: 66px;
+                line-height: 66px;
+                color: #777;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                cursor: pointer;
+                border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+            }
+            a:hover {
+                color: #3366CC;
+                padding: 0 0 0 25px;
+                background-color: rgba($color: #3366CC, $alpha: 0.1);
+            }
+            a:active {
+                color: #fff;
+                padding: 0 0 0 25px;
+            }
+        }
+        #articleListDom{
+            box-sizing: border-box;
+            margin-left: 1%;
+            padding-left: 80px;
+            width: 79%;
+            height: 100%;
+            background-color: white;
+            #articleTabDom{
+                width: 80%;
+                height: 60px;
+                background-color: rgba($color:white, $alpha: 1);
+                margin-top:30px;
+                display: flex;
+                color: #5f5f5f;
+                align-items: center;
+                .article-tab{
+                    height: 60px;
+                    line-height: 60px;
+                    font-size: 22px;
+                    font-weight: 600;
+                    padding-bottom: 5px;
+                    margin: 0 15px 10px 0;
+                    display: inline-block;
+                    border-bottom: 2px solid transparent;
+                    color: #777;
+                    cursor: pointer;
+                }
+                .article-tab-all, .article-tab-mine{
+                    display: none;
+                }
+                .article-tab-all:checked+.article-tab, .article-tab-mine:checked+.article-tab{
+                    color: #000;
+                    border-color: #3366CC;
+                }
+                #searchArticleInput{
+                    width: 240px;
+                    height: 36px;
+                    padding-left: 6px;
+                    line-height: 36px;
+                    font-size: 18px;
+                    color: #777;
+                    border-radius: 5px;
+                    border: 1px solid rgba($color: #000000, $alpha: 0.1);
+                    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
+                    margin-left: auto;
+                    background: url("./../../assets/image/articleImg/search.png") no-repeat right center;
+                    padding-right: 34px;
+                }
+            }
+        }
+    }
 }

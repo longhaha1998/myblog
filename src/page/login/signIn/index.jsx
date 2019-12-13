@@ -41,6 +41,10 @@ class SignInDom extends React.Component{
         if(!this.checkForm(user)){
             return;
         }
+        if(user.userName.length>30 || user.password.length>30){
+            tipStore.changeData("用户名或密码过长","warning");
+            return;
+        }
         user.toggleSignInAnim();
         tipStore.toggleWaiting();
         axios.post(this.context+"/login",{

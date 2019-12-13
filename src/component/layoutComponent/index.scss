@@ -1,49 +1,62 @@
 #layoutBox{
     width: 100%;
-    height: 88vh;
-    min-height: 775px;
+    min-width: 1080px;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     #layoutNav{
         position: absolute;
-        width: 200px;
-        top: 5%;
-        left: 5%;
-        @media (min-aspect-ratio : 1/1){
-            top: 10%;
-        }
-        max-height: 80vh;
+        width: 300px;         
+        margin-top: 60px;
+        margin-left: 60px;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        font-weight: bold;
+        // border: 1px solid rgba($color: #000000, $alpha: 0.3);
+        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+        max-height: 820px;
         overflow: auto;
-        li a {
-            height: 32px;
-            text-decoration: none;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            border-left: 1px solid rgba($color: #000000, $alpha: 0.3);
-            border-right: 1px solid rgba($color: #000000, $alpha: 0.3);
-            box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+        top: 0;
+        left: 0;
+        ul{
+            li{
+                width:100%;
+                a{
+                    display: block;
+                    text-align: center;
+                    text-decoration: none;
+                    width: 100%;
+                    height: 66px;
+                    line-height: 66px;
+                    color: #777;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    cursor: pointer;
+                    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+                    abbr{
+                        text-decoration: none;
+                    }
+                }
+                a:hover {
+                    color: #3366CC;
+                    padding: 0 0 0 25px;
+                    background-color: rgba($color: #3366CC, $alpha: 0.1);
+                }
+                a:active {
+                    color: #fff;
+                    padding: 0 0 0 25px;
+                }
+            }
         }
-        li a:link, li a:visited {
-            color: #777;
-            display: block;
-            background: url(../../assets/image/menu5.gif);
-            padding: 8px 25px 0 10px;
-            text-align: right;
-        }
-        li a:hover {
-            color: #fff;
-            background: url(../../assets/image/menu5.gif) 0 -32px;
-            padding: 8px 25px 0 10px;
-            text-align: right;
-        }
-        li a:active {
-            color: #fff;
-            background: url(../../assets/image/menu5.gif) 0 -64px;
-            padding: 8px 25px 0 10px;
-            text-align: right;
-        }
+    }
+    main{
+        width: 100%;
+        height: 88vh;
+        min-height: 820px;
     }
 }
