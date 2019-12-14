@@ -6,6 +6,7 @@ import ArticleStore from './../component/writeArticle/store';
 import ArticleVisualStore from './../page/article/store';
 import CurrentArticleStore from './../page/article/articleDetail/store';
 import PageNationStore from './../component/pageNation/store';
+import AdminStore from './../page/adminPage/store';
 
 const store = {
     WelcomeAnimStore,
@@ -15,7 +16,8 @@ const store = {
     ArticleStore,
     ArticleVisualStore,
     CurrentArticleStore,
-    PageNationStore
+    PageNationStore,
+    AdminStore
 }
 
 export default store;

@@ -6,8 +6,7 @@
     justify-content: center;
     align-items: center;
     #layoutNav{
-        position: absolute;
-        width: 300px;         
+        position: absolute;        
         margin-top: 60px;
         margin-left: 60px;
         background-color: white;
@@ -22,7 +21,27 @@
         overflow: auto;
         top: 0;
         left: 0;
+        #layoutCheck{
+            display: none;
+        }
+        #layoutCheckLabel{
+            padding: 6px;
+            img:hover{
+                background-color: rgba($color: #777, $alpha: 0.5);
+            }
+        }
+        #layoutCheck:checked+#layoutCheckLabel+ul{
+            width: 48px;
+            li{
+                a{
+                    height: 0;
+                    border: none;
+                }
+            }
+        }
         ul{
+            width: 300px;
+            transition: width 0.5s ease-in-out 0s; 
             li{
                 width:100%;
                 a{
@@ -41,6 +60,10 @@
                     abbr{
                         text-decoration: none;
                     }
+                    transition: height 0.5s ease-in-out 0s;
+                }
+                a:first-child{
+                    border-top: 1px solid rgba($color: #000000, $alpha: 0.1);
                 }
                 a:hover {
                     color: #3366CC;

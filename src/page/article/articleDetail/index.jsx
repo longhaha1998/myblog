@@ -29,8 +29,8 @@ class ArticleDetail extends React.Component{
         axios.get(this.context+`/getArticleById?id=${this.props.match.params.articleId}`)
         .then(res => {
             this.props.TipStore.toggleWaiting();
+            console.log(res.data.data)
             if(res.data.status === 1){
-                console.log(res.data)
                 if(res.data.data.visible === 0){
                     if(!currentUser.ifLogined || !(currentUser.userName === res.data.data.author)){
                         this.props.TipStore.changeData("无权限，请联系管理员","warning");

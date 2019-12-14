@@ -33,12 +33,20 @@ class WriteArticle extends React.Component{
     componentDidMount(){
         const {ArticleStore: articleStore, CurrentUser: currentUser, TipStore: tipStore} = this.props;
         let textDom = this.textDom.current;
-        if(!currentUser.ifLogined){
-            tipStore.changeData("请先登录","warning");
-            this.props.history.replace(`/home`);
-        }else if(!(currentUser.role.indexOf('2')>-1)){
-            tipStore.changeData("无权限，请联系管理员","warning");
-            this.props.history.replace(`/home`);
+        if(!currentUser.ifLogined || !(currentUser.role.indexOf('2')>-1)){
+            if(sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser')){
+                let tempCurrentUser = sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser');
+                let user = JSON.parse(tempCurrentUser);
+                if(!(user.role.indexOf('2')>-1)){
+                    tipStore.changeData("无权限，请联系管理员","warning");
+                    this.props.history.replace(`/home`);
+                    return;
+                }
+            }else{
+                tipStore.changeData("无权限，请联系管理员","warning");
+                this.props.history.replace(`/home`);
+                return;
+            }
         }
         textDom.addEventListener("scroll",(e) => {this.handleScroll(e);},false);
         if(articleStore.ifEdit){
@@ -175,15 +183,17 @@ class WriteArticle extends React.Component{
             .then(res => {
                 this.props.TipStore.toggleWaiting();
                 if(res.data.status === 1){
-                    this.props.TipStore.changeData(articleStore.ifEdit?"修改成功":"发布成功", "success")
+                    this.props.TipStore.changeData(articleStore.ifEdit?"修改成功":"发布成功", "success");
                     this.removeDraft();
                     if(articleStore.ifEdit){
+                        articleStore.toggleIfEdit(false);
+                        articleStore.toggleIfSave(true);
                         this.props.history.replace(`/home/articleDetail/${articleStore.currentID}`);
                     }else{
+                        articleStore.toggleIfEdit(false);
+                        articleStore.toggleIfSave(true);
                         this.props.history.replace(`/home/articleDetail/${res.data.articleId}`);
                     }
-                    articleStore.toggleIfEdit(false);
-                    articleStore.toggleIfSave(true);
                 }else{
                     this.props.TipStore.changeData(articleStore.ifEdit?"修改失败":"发布失败", "fail");
                 }

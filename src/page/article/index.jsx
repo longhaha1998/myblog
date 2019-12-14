@@ -34,6 +34,7 @@ class ArticlePage extends React.Component{
 
     componentDidMount(){
         const {PageNationStore: pageNationStore} = this.props;
+        this.props.PageNationStore.updatePageSize(3);
         this.initialPageNationState();
         this.getArticleList(this.context+`/getArticleList?type=articleList&begin=${pageNationStore.dataBegin}&end=${pageNationStore.dataEnd}`);
         pageNationStore.requestType = this.context+`/getArticleList?type=articleList`;
@@ -152,7 +153,7 @@ class ArticlePage extends React.Component{
                             <label htmlFor="article-tab-1" className="article-tab" onClick={(e) => {this.handleClickTab1()}}>全部文章</label>
                             <input onChange={(e) => {this.handleGetMine(e);}} id="article-tab-2" type="radio" name="article-tab" className="article-tab-mine" disabled={!this.props.CurrentUser.ifLogined?"disabled":""}/>
                             <label htmlFor="article-tab-2" className="article-tab" onClick={(e) => {this.handleClickTab2()}}>我的文章</label>
-                            <input onKeyDown={(e) => {this.handleSearchArticle(e);}} onChange={ e => {pageNationStore.updatesSearchVal(e.target.value)}} value={pageNationStore.searchVal} type="text" placeholder="搜索" id="searchArticleInput"/>
+                            <input onKeyDown={(e) => {this.handleSearchArticle(e);}} onChange={ e => {pageNationStore.updatesSearchVal(e.target.value)}} value={pageNationStore.searchVal} type="text" placeholder="按标题搜索" id="searchArticleInput"/>
                         </div>
                         <Suspense fallback={<LoadingPage />}>
                             <ArticleContainer history={this.props.history}/>

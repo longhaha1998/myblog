@@ -61,13 +61,13 @@ class SignUpDom extends React.Component{
             }else{
                 sessionStorage.setItem("currentUser",JSON.stringify({
                     username:res.data.username,
-                    role:res.data.role.split(","),
+                    role:JSON.parse(res.data.role),
                 }));
                 localStorage.setItem("currentUser",JSON.stringify({
                     username:res.data.username,
-                    role:res.data.role.split(","),
+                    role:JSON.parse(res.data.role),
                 }));
-                currentUser.changeUser(res.data.username, res.data.role.split(","), true);
+                currentUser.changeUser(res.data.username, JSON.parse(res.data.role), true);
                 this.props.history.replace('/home');
                 user.initial();
                 user.toggleIfSignUp(false);

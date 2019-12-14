@@ -13,7 +13,7 @@ import motionIco from "./../../../assets/image/articleImg/motion.png";
 import { Remarkable } from 'remarkable';
 
 
-@inject("ArticleVisualStore","ArticleStore","CurrentArticleStore")
+@inject("ArticleVisualStore","ArticleStore","CurrentArticleStore","CurrentUser","TipStore")
 @observer
 class ArticleContainer extends React.Component{
 
@@ -25,6 +25,12 @@ class ArticleContainer extends React.Component{
     }
 
     handleClickDetail(ele){
+        if(ele.visible === 0){
+            if(!this.props.CurrentUser.ifLogined || this.props.CurrentUser.userName !== ele.author){
+                this.props.TipStore.changeData("无权限，请联系管理员","warning");
+                return;
+            }
+        }
         this.props.history.push(`/home/articleDetail/${ele.id}`);
     }
 

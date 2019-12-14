@@ -45,7 +45,7 @@ class App extends React.Component {
         return (
             // <IPContext.Provider value={"http://192.168.43.133:7001"}> 172.22.65.13 47.103.11.183 192.168.43.40
             <React.Fragment>
-                <IPContext.Provider value={"http://172.22.65.13:7001"}>
+                <IPContext.Provider value={"http://47.103.11.183:7001"}>
                     <Provider {...store}>
                         <Suspense fallback={<LoadingPage />}>
                                 <AppPage />  

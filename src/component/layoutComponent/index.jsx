@@ -1,6 +1,7 @@
 import React, {Suspense}from 'react';
 import {Link, Switch, Route, Redirect} from 'react-router-dom';
 import LoadingPage from '../../page/loadingPage';
+import listIco from "./../../assets/image/list.png";
 import "./index.scss";
 
 class LayoutComponent extends React.Component{
@@ -24,6 +25,8 @@ class LayoutComponent extends React.Component{
         return(
             <div id="layoutBox">
                 <nav id="layoutNav">
+                    <input id="layoutCheck" type="checkbox" />
+                    <label id="layoutCheckLabel" htmlFor="layoutCheck"><img src={listIco}></img></label>
                     <ul>
                         {navList}
                     </ul>

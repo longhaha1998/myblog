@@ -20,7 +20,7 @@ class PageNationStore{
     constructor(){
         this.currentPage = 1;
         this.dataSize = 0;
-        this.pageSize = 1;
+        this.pageSize = 3;
         this.pageBegin = 1;
         this.dataBegin = 0;
         this.requestType = "";

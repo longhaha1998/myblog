@@ -10,6 +10,7 @@ const ArticlePage = React.lazy(() => import('../article'));
 const ChangeAvatarComponent = React.lazy(() => import("./../../component/changeAvatarComponent"));
 const WriteArticle = React.lazy(() => import("../../component/writeArticle"));
 const ArticleDetail = React.lazy(() => import("../../page/article/articleDetail"));
+const AdminPage = React.lazy(() => import("../../page/adminPage"));
 import defaultAvatar from "../../assets/image/default.jpg";
 import quitIco from "../../assets/image/quit.png";
 import changIco from "../../assets/image/change.png";
@@ -36,6 +37,7 @@ class HomePage extends React.Component{
         this.postAvatar = this.postAvatar.bind(this);
         this.downLoadAvatar = this.downLoadAvatar.bind(this);
         this.preventDefault = this.handleWriteArticle.bind(this);
+        this.handleAdmin = this.handleAdmin.bind(this);
     }
 
     componentDidMount(){
@@ -187,6 +189,11 @@ class HomePage extends React.Component{
         this.props.history.push('/home/writeArticle');
     }
 
+    handleAdmin(e){
+        e.preventDefault();
+        this.props.history.push('/home/adminPage');
+    }
+
     render(){
         const {CurrentUser: currentUser} = this.props;
         return(
@@ -211,7 +218,7 @@ class HomePage extends React.Component{
                                         <img id="loginedImg" src={currentUser.avatar}></img>
                                     }
                                     <div id="loginOutDom">
-                                        {currentUser.role.indexOf("666")>-1 && <a onClick={(e) => {e.preventDefault();}}><img className="image" src={adminIco}></img><span>后台管理</span></a>}
+                                        {currentUser.role.indexOf("666")>-1 && <a onClick={(e) => {e.preventDefault();this.handleAdmin(e);}}><img className="image" src={adminIco}></img><span>后台管理</span></a>}
                                         {currentUser.role.indexOf("2")>-1 && <a onClick={(e) => {e.preventDefault();this.handleWriteArticle(e);}}><img className="image" src={writeIco}></img><span>写文章</span></a>}
                                         <input ref={this.avatarFile} onChange={(e) => {this.handleSelectFile(e);}} accept=".jpg, .jpeg, .png" type="file" id="avatarFile"></input>
                                         <label htmlFor="avatarFile" id="changeAvatar"><img className="image" src={changIco}></img><span>更换头像</span></label>
@@ -255,6 +262,13 @@ class HomePage extends React.Component{
                     <Route path="/home/writeArticle" render={(routeProp) => (
                         <Suspense fallback={<LoadingPage />}>
                             <WriteArticle {...routeProp}/>
+                        </Suspense>
+                    )}>
+                    </Route>
+
+                    <Route path="/home/adminPage" render={(routeProp) => (
+                        <Suspense fallback={<LoadingPage />}>
+                            <AdminPage {...routeProp}/>
                         </Suspense>
                     )}>
                     </Route>
