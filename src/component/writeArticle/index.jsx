@@ -28,6 +28,7 @@ class WriteArticle extends React.Component{
         this.saveDraft = this.saveDraft.bind(this);
         this.removeDraft = this.removeDraft.bind(this);
         this.handlePublish = this.handlePublish.bind(this);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
     }
 
     componentDidMount(){
@@ -56,6 +57,12 @@ class WriteArticle extends React.Component{
                 articleStore.updateText(localStorage.getItem(`${this.props.CurrentUser.userName}_DraftText`)?localStorage.getItem(`${this.props.CurrentUser.userName}_DraftText`):"");
                 articleStore.updateTitle(localStorage.getItem(`${this.props.CurrentUser.userName}_DraftTitle`)?localStorage.getItem(`${this.props.CurrentUser.userName}_DraftTitle`):"");
             }
+        }
+    }
+
+    handleKeyDown(e){
+        if((e.keyCode === 13) && (e.ctrlKey)){
+            this.props.ArticleStore.updateText(this.textDom.current.value+`\n<br />\n`);
         }
     }
 
@@ -139,7 +146,7 @@ class WriteArticle extends React.Component{
     handleScroll(e){
         let textDom = this.textDom.current;
         let mdView = this.mdView.current;
-        let per = mdView.scrollHeight/textDom.scrollHeight;
+        let per = (mdView.scrollHeight - mdView.clientHeight)/(textDom.scrollHeight - textDom.clientHeight);
         mdView.scrollTo(0,textDom.scrollTop*per);
     }
 
@@ -279,7 +286,7 @@ class WriteArticle extends React.Component{
                                 <a id="mdPublish" onClick={(e) => {this.handlePublish(e)}}></a>
                             </li>
                         </ul>
-                        <textarea  ref={this.textDom} id="mdEditor" onChange={(e) => {articleStore.updateText(e.target.value);}} value={articleStore.textVal} placeholder="请输入内容">
+                        <textarea onKeyDown={e => {this.handleKeyDown(e)}}  ref={this.textDom} id="mdEditor" onChange={(e) => {articleStore.updateText(e.target.value);}} value={articleStore.textVal} placeholder="请输入内容">
                         </textarea>
                     </div>
                 </div>
