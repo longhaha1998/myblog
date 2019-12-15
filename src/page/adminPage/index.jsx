@@ -320,7 +320,7 @@ class AdminPage extends React.Component{
                             <input onKeyDown={(e) => {this.handleSearchUser(e);}} onChange={ e => {pageNationStore.updatesSearchVal(e.target.value)}} value={pageNationStore.searchVal} type="text" placeholder="按用户名搜索" id="adminSearchArticleInput"/>
                         </div>
                     }
-                    <div>
+                    <div id="adminTableContainer">
                         <table id="adminTable">
                             {this.renderAdminTHead()}
                             {this.renderAdminTBody()}

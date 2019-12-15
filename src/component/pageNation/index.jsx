@@ -90,7 +90,6 @@ class PageNationComponent extends React.Component{
             &&
             <div id="pageNationDom">
                 <div id="pageContainer">
-                    <span id="currentPageNumSpan">当前页码：<a>{pageNationStore.currentPage}</a></span>
                     <a className="pageElementChange" onClick={(e) => {e.preventDefault();this.handleClickMovePage(false);}}>上一页</a>
                     {pageNationStore.pageBegin>1 && <a className="pageLeft" onClick={(e) => {e.preventDefault();}}>...</a>}
                         {pageList}
@@ -98,14 +97,13 @@ class PageNationComponent extends React.Component{
                     <a className="pageElementChange" onClick={(e) => {e.preventDefault();this.handleClickMovePage(true);}}>下一页</a>
 
 
-                    <span id="jumpToPageNumSpan">跳转至：第</span>
+                    <span id="jumpToPageNumSpan">跳转至:</span>
                     <input onChange={e => {pageNationStore.updatePageNumValue(e.target.value)}} onKeyDown={(e) => {this.handlePageNumChange(e);}} id="jumpToPageNumInput" list="pageNumList" value = {pageNationStore.pageNumValue}/>
                     <datalist id="pageNumList">
                         {pageNumList}
                     </datalist>
-                    <span>页</span>
 
-                    <span id="pageMaxNumSpan">当前页最大显示数：</span>
+                    <span id="pageMaxNumSpan">当前页最大显示数:</span>
                     <select id="pageMaxNumSelect" value={pageNationStore.pageSize} onChange={e => {this.handleChangePageMaxNum(e);}}>
                         <option value={1}>{1}</option>
                         <option value={3}>{3}</option>

@@ -37,6 +37,10 @@ class App extends React.Component {
             currentUser.changeAvatar(JSON.parse(tempAvatar),tempAvatarType);
         }
 
+        window.addEventListener("drop",(e) => {
+                e.preventDefault();
+        },{passive: false,capture: false});
+
         window.getBlobURL = (window.URL && URL.createObjectURL.bind(URL)) || (window.webkitURL && webkitURL.createObjectURL.bind(webkitURL)) || window.createObjectURL;
         window.revokeBlobURL = (window.URL && URL.revokeObjectURL.bind(URL)) || (window.webkitURL && webkitURL.revokeObjectURL.bind(webkitURL)) || window.revokeObjectURL;
     }

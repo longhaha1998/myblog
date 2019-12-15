@@ -5,32 +5,12 @@
     margin-top: 30px;
     margin-bottom: 30px;
     #pageContainer{
-        width: 1080px;
         height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         color: #777;
         font-size: 18px;
-        #currentPageNumSpan{
-            margin-right: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            a,a:hover{
-                color: #777;
-                font-size: 16px;
-                width: 30px;
-                height: 30px;
-                line-height: 30px;
-                text-align: center;
-                border-radius: 4px;
-                margin-right: 10px;
-                color: rgba($color: #000000, $alpha: 0.6);
-                background-color: rgba($color: #3366cc, $alpha: 0);
-                cursor: auto;
-            }
-        }
         a{
             color: #777;
             font-size: 16px;
@@ -68,18 +48,27 @@
         }
         #jumpToPageNumSpan{
             margin-left: 20px;
+            @media (max-width:1132px) {
+                display: none;
+            }
         }
         #jumpToPageNumInput{
-            width: 45px;
+            width: 46px;
             height: 24px;
             border: 1px solid rgba($color: #000000, $alpha: 0.3);
             border-radius: 4px;
             margin-right: 10px;
             margin-left: 10px;
+            @media (max-width:1132px) {
+                display: none;
+            }
         }
 
         #pageMaxNumSpan{
             margin-left: 20px;
+            @media (max-width:1538px) {
+                display: none;
+            }
         }
         #pageMaxNumSelect{
             /*清除select默认样式*/
@@ -91,7 +80,7 @@
             position: relative;
             border:1px solid #CCC;
             border-radius: 4px;
-            width:100px;
+            width:46px;
             height:24px;
             line-height: 24px;
             padding-left: 8px;
@@ -101,6 +90,9 @@
             background-origin: content-box;
             /*ie下,原默认的箭头样式还是会显示，所以这里把自定义的样式给去除了*/
             outline:none;
+            @media (max-width:1538px) {
+                display: none;
+            }
         }
     }
 }

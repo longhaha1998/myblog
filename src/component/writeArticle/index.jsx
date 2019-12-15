@@ -29,6 +29,7 @@ class WriteArticle extends React.Component{
         this.removeDraft = this.removeDraft.bind(this);
         this.handlePublish = this.handlePublish.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
+        this.handleDropFile = this.handleDropFile.bind(this);
     }
 
     componentDidMount(){
@@ -116,6 +117,20 @@ class WriteArticle extends React.Component{
             }else{
                 this.postPic(file);
             }
+        }
+    }
+
+    handleDropFile(e){
+        let tempFile = e.dataTransfer.files[0];
+        if(tempFile.type !== "image/jpeg" && tempFile.type !== "image/png"){
+            this.props.TipStore.changeData("只支持png或jpg图片", "fail");
+            return
+        }
+        if(tempFile.size>6*1024*1024){
+            this.props.TipStore.changeData("图片大小不能超过6mb", "fail");
+            return
+        }else{
+            this.postPic(tempFile);
         }
     }
 
@@ -286,7 +301,7 @@ class WriteArticle extends React.Component{
                                 <a id="mdPublish" onClick={(e) => {this.handlePublish(e)}}></a>
                             </li>
                         </ul>
-                        <textarea onKeyDown={e => {this.handleKeyDown(e)}}  ref={this.textDom} id="mdEditor" onChange={(e) => {articleStore.updateText(e.target.value);}} value={articleStore.textVal} placeholder="请输入内容">
+                        <textarea onDrop={e => {this.handleDropFile(e)}} onKeyDown={e => {this.handleKeyDown(e)}}  ref={this.textDom} id="mdEditor" onChange={(e) => {articleStore.updateText(e.target.value);}} value={articleStore.textVal} placeholder="请输入内容">
                         </textarea>
                     </div>
                 </div>
