@@ -47,7 +47,7 @@ class App extends React.Component {
 
     render () {
         return (
-            // <IPContext.Provider value={"http://192.168.43.133:7001"}> 172.22.65.13 47.103.11.183 192.168.43.40
+            // <IPContext.Provider value={"http://192.168.43.133:7001"}> 172.22.65.13 47.103.11.183 192.168.43.40 http://127.0.0.1:7001 https://longhaha.top:8443
             <React.Fragment>
                 <IPContext.Provider value={"https://longhaha.top:8443"}> 
                     <Provider {...store}>

@@ -10,6 +10,7 @@ import reactIco from "./../../../assets/image/articleImg/react.png";
 import writeIco from "./../../../assets/image/articleImg/write.png";
 import htmlIco from "./../../../assets/image/articleImg/html.png";
 import motionIco from "./../../../assets/image/articleImg/motion.png";
+import otherIco from "./../../../assets/image/articleImg/other.png";
 import { Remarkable } from 'remarkable';
 
 
@@ -52,6 +53,8 @@ class ArticleContainer extends React.Component{
                 return motionIco;
             case "cs":
                 return csIco;
+            case "other":
+                return otherIco;
             default:
                 return jsIco;
         }

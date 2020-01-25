@@ -9,7 +9,7 @@
         position: absolute;        
         margin-top: 60px;
         margin-left: 60px;
-        background-color: white;
+        background-color: transparent;
         display: flex;
         flex-direction: column;
         font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -25,10 +25,12 @@
             display: none;
         }
         #layoutCheckLabel{
+            background-color: white;
             padding: 6px;
             img:hover{
                 background-color: rgba($color: #777, $alpha: 0.5);
             }
+            transition: all 0.5s ease-in-out 0s;
         }
         #layoutCheck:checked+#layoutCheckLabel+ul{
             width: 48px;
@@ -39,9 +41,13 @@
                 }
             }
         }
+        #layoutCheck:checked+#layoutCheckLabel,#layoutCheck:checked+#layoutCheckLabel+ul{
+            opacity: 0.3;
+        }
         ul{
+            background-color: white;
             width: 300px;
-            transition: width 0.5s ease-in-out 0s; 
+            transition: all 0.5s ease-in-out 0s; 
             li{
                 width:100%;
                 a{
@@ -60,7 +66,7 @@
                     abbr{
                         text-decoration: none;
                     }
-                    transition: height 0.5s ease-in-out 0s;
+                    transition: all 0.5s ease-in-out 0s;
                 }
                 a:first-child{
                     border-top: 1px solid rgba($color: #000000, $alpha: 0.1);
@@ -79,7 +85,7 @@
     }
     main{
         width: 100%;
-        height: 88vh;
+        // height: 88vh;
         min-height: 820px;
     }
 }
