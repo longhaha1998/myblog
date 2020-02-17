@@ -15,6 +15,8 @@ class ArticlePage extends React.Component{
 
     constructor(props){
         super(props);
+        this.ifSearch = false;
+        this.searchValue = "";
         this.getArticleList = this.getArticleList.bind(this);
         this.handleGetAll = this.handleGetAll.bind(this);
         this.handleGetMine = this.handleGetMine.bind(this);
@@ -43,7 +45,9 @@ class ArticlePage extends React.Component{
     }
 
     handleSearchArticle(e){
-        if(e.keyCode === 13){
+        if(e.keyCode === 13 && e.target.value !== ""){
+            this.ifSearch = true;
+            this.searchValue = e.target.value;
             const {PageNationStore: pageNationStore} = this.props;
             this.initialPageNationState();
             this.getArticleList(this.context+`/getSearchList?type=searchList&searchVal=${pageNationStore.searchVal}&begin=${pageNationStore.dataBegin}&end=${pageNationStore.dataEnd}`);
@@ -51,29 +55,7 @@ class ArticlePage extends React.Component{
         }
     }
 
-    handleGetAll(){
-        const {PageNationStore: pageNationStore} = this.props;
-        if(!this.props.ArticleVisualStore.ifAll){
-            this.initialPageNationState();
-            this.getArticleList(this.context+`/getArticleList?type=articleList&begin=${pageNationStore.dataBegin}&end=${pageNationStore.dataEnd}`);
-            pageNationStore.requestType = this.context+`/getArticleList?type=articleList`;
-            this.props.ArticleVisualStore.toggleIfAll(true);
-            this.props.ArticleVisualStore.toggleIfMine(false);
-        }
-    }
-
-    handleGetMine(){
-        const {PageNationStore: pageNationStore} = this.props;
-        if(!this.props.ArticleVisualStore.ifMine){
-            this.initialPageNationState();
-            this.getArticleList(this.context+`/getMyArticle?type=${this.props.CurrentUser.userName}ArticleCache&user=${this.props.CurrentUser.userName}&begin=${pageNationStore.dataBegin}&end=${pageNationStore.dataEnd}`);
-            pageNationStore.requestType = this.context+`/getMyArticle?type=${this.props.CurrentUser.userName}ArticleCache&user=${this.props.CurrentUser.userName}`;
-            this.props.ArticleVisualStore.toggleIfAll(false);
-            this.props.ArticleVisualStore.toggleIfMine(true);
-        }
-    }
-
-    getArticleList(address){
+    getArticleList(address,ifSearch,searchObj){
         const {PageNationStore: pageNationStore} = this.props;
         this.props.TipStore.toggleWaiting();
         axios.get(address)
@@ -84,6 +66,29 @@ class ArticlePage extends React.Component{
                 pageNationStore.updateDataSize(res.data.count);
                 pageNationStore.updatePageNumValue("");
                 pageNationStore.updatesSearchVal("");
+                if(this.ifSearch){
+                    let tempNodes = Array.prototype.slice.call(document.getElementsByClassName("searchAbbr"),0);
+                    tempNodes.forEach( item => {
+                        let mes = item.innerHTML.toLowerCase();
+                        let offset = mes.indexOf(this.searchValue.toLowerCase());
+                        let tempRange = document.createRange();
+                        tempRange.setStart(item.firstChild,offset);
+                        tempRange.setEnd(item.firstChild,offset+this.searchValue.length);
+                        let span = document.createElement("span");
+                        span.style.color = "red";
+                        tempRange.surroundContents(span);
+                        tempRange.detach();
+                        tempRange = null;
+                    });
+                }else{
+                    if(document.getElementsByClassName("searchAbbr")[0].innerHTML.indexOf("span")>0){
+                        let tempNodes = Array.prototype.slice.call(document.getElementsByClassName("searchAbbr"),0);
+                        tempNodes.forEach( item => {
+                            item.replaceChild(document.createTextNode(item.getElementsByTagName("span")[0].innerHTML),item.getElementsByTagName("span")[0]);
+                            item.normalize();
+                        });
+                    }
+                }
             }
             if(res.data.status === -2){
                 this.props.TipStore.changeData("登录已过期，请重新登录","warning");
@@ -97,9 +102,37 @@ class ArticlePage extends React.Component{
         })
     }
 
+    handleGetAll(){
+        const {PageNationStore: pageNationStore} = this.props;
+        if(!this.props.ArticleVisualStore.ifAll){
+            this.ifSearch = false;
+            this.searchValue = "";
+            this.initialPageNationState();
+            this.getArticleList(this.context+`/getArticleList?type=articleList&begin=${pageNationStore.dataBegin}&end=${pageNationStore.dataEnd}`);
+            pageNationStore.requestType = this.context+`/getArticleList?type=articleList`;
+            this.props.ArticleVisualStore.toggleIfAll(true);
+            this.props.ArticleVisualStore.toggleIfMine(false);
+        }
+    }
+
+    handleGetMine(){
+        const {PageNationStore: pageNationStore} = this.props;
+        if(!this.props.ArticleVisualStore.ifMine){
+            this.ifSearch = false;
+            this.searchValue = "";
+            this.initialPageNationState();
+            this.getArticleList(this.context+`/getMyArticle?type=${this.props.CurrentUser.userName}ArticleCache&user=${this.props.CurrentUser.userName}&begin=${pageNationStore.dataBegin}&end=${pageNationStore.dataEnd}`);
+            pageNationStore.requestType = this.context+`/getMyArticle?type=${this.props.CurrentUser.userName}ArticleCache&user=${this.props.CurrentUser.userName}`;
+            this.props.ArticleVisualStore.toggleIfAll(false);
+            this.props.ArticleVisualStore.toggleIfMine(true);
+        }
+    }
+
     handleClickTab1(){
         const {PageNationStore: pageNationStore} = this.props;
-        if(this.props.ArticleVisualStore.ifAll){
+        if(this.props.ArticleVisualStore.ifAll && this.ifSearch){
+            this.ifSearch = false;
+            this.searchValue = "";
             this.initialPageNationState();
             this.getArticleList(this.context+`/getArticleList?type=articleList&begin=${pageNationStore.dataBegin}&end=${pageNationStore.dataEnd}`);
             pageNationStore.requestType = this.context+`/getArticleList?type=articleList`;
@@ -112,7 +145,9 @@ class ArticlePage extends React.Component{
             this.props.TipStore.changeData("请先登录","warning");
             return;
         }else{
-            if(this.props.ArticleVisualStore.ifMine){
+            if(this.props.ArticleVisualStore.ifMine && this.ifSearch){
+                this.ifSearch = false;
+                this.searchValue = "";
                 this.initialPageNationState();
                 this.getArticleList(this.context+`/getMyArticle?type=${this.props.CurrentUser.userName}ArticleCache&user=${this.props.CurrentUser.userName}&begin=${pageNationStore.dataBegin}&end=${pageNationStore.dataEnd}`);
                 pageNationStore.requestType = this.context+`/getMyArticle?type=${this.props.CurrentUser.userName}ArticleCache&user=${this.props.CurrentUser.userName}`;
@@ -127,6 +162,8 @@ class ArticlePage extends React.Component{
             return;
         }
         this.initialPageNationState();
+        this.ifSearch = false;
+        this.searchValue = "";
         if(this.props.ArticleVisualStore.ifAll){
             this.getArticleList(this.context+`/getArticleList?type=${type}ArticleList&begin=${pageNationStore.dataBegin}&end=${pageNationStore.dataEnd}`);
             pageNationStore.requestType = this.context+`/getArticleList?type=${type}ArticleList`;

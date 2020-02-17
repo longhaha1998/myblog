@@ -72,10 +72,15 @@ class ArticleContainer extends React.Component{
 
     render(){
         return(
+            this.props.ArticleVisualStore.articleList.length<=0?
+            <div className="noArticleContentDom">
+                <h1>无内容</h1>
+            </div>
+            :
             this.props.ArticleVisualStore.articleList.map( ele => (
                 <div key={ele.id} className="articleContentDom">
                     <header>
-                        <h1><abbr title={ele.title}>{ele.title}</abbr></h1>
+                        <h1><abbr className="searchAbbr" title={ele.title}>{ele.title}</abbr></h1>
                         <a onClick={(e) => {e.preventDefault();this.handleClickDetail(ele)}}>详情>>></a>
                     </header>
                     <main>

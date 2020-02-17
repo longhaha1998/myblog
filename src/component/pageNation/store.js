@@ -25,6 +25,7 @@ class PageNationStore{
         this.dataBegin = 0;
         this.requestType = "";
         this.pageNumValue = "";
+        // 搜索文章的变量
         this.searchVal = "";
     }
 
@@ -73,6 +74,7 @@ class PageNationStore{
         this.pageNumValue = val;
     }
 
+    // 更新搜索文章的变量
     @action
     updatesSearchVal(val){
         this.searchVal = val;
