@@ -5,12 +5,12 @@ const HackerCode = React.lazy(() => import('./hackerCode'));
 
 const route = [
     {
-        name:'井字棋',
+        name:'可拖动的li',
         pathname:'/home/demo/tic-tac-toe',
         component: <Suspense><DragLiDemo /></Suspense>
     },
     {
-        name:'可拖动的li',
+        name:'井字棋',
         pathname:'/home/demo/dragLi',
         component: <Suspense><TicTacToeDemo /></Suspense>
     },

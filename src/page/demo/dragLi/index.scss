@@ -1,0 +1,27 @@
+#DragLiDemo{
+    width: 100%;
+    height: 820px;
+    #DragLiDom{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        #DragLiContainer{
+            margin-top: 80px;
+            list-style: none;
+            width: 300px;
+            .DragLiEle{
+                width: 100%;
+                height: 40px;
+                background: #EA6E59;
+                border: 1px solid #999;
+                margin-top: 10px;
+                border-radius: 25px;
+                padding-left: 10px;
+                padding-top: 10px;
+                color: white;
+                cursor: move;
+            }
+        }
+    }
+}
