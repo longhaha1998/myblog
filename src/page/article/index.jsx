@@ -16,6 +16,7 @@ class ArticlePage extends React.Component{
     constructor(props){
         super(props);
         this.ifSearch = false;
+        this.ifType = false;
         this.searchValue = "";
         this.getArticleList = this.getArticleList.bind(this);
         this.handleGetAll = this.handleGetAll.bind(this);
@@ -48,6 +49,7 @@ class ArticlePage extends React.Component{
         if(e.keyCode === 13 && e.target.value !== ""){
             this.ifSearch = true;
             this.searchValue = e.target.value;
+            this.ifType = false;
             const {PageNationStore: pageNationStore} = this.props;
             this.initialPageNationState();
             this.getArticleList(this.context+`/getSearchList?type=searchList&searchVal=${pageNationStore.searchVal}&begin=${pageNationStore.dataBegin}&end=${pageNationStore.dataEnd}`);
@@ -55,7 +57,7 @@ class ArticlePage extends React.Component{
         }
     }
 
-    getArticleList(address,ifSearch,searchObj){
+    getArticleList(address){
         const {PageNationStore: pageNationStore} = this.props;
         this.props.TipStore.toggleWaiting();
         axios.get(address)
@@ -81,7 +83,7 @@ class ArticlePage extends React.Component{
                         tempRange = null;
                     });
                 }else{
-                    if(document.getElementsByClassName("searchAbbr")[0].innerHTML.indexOf("span")>0){
+                    if(document.getElementsByClassName("searchAbbr").length>0 && document.getElementsByClassName("searchAbbr")[0].innerHTML.indexOf("span")>0){
                         let tempNodes = Array.prototype.slice.call(document.getElementsByClassName("searchAbbr"),0);
                         tempNodes.forEach( item => {
                             item.replaceChild(document.createTextNode(item.getElementsByTagName("span")[0].innerHTML),item.getElementsByTagName("span")[0]);
@@ -107,6 +109,7 @@ class ArticlePage extends React.Component{
         if(!this.props.ArticleVisualStore.ifAll){
             this.ifSearch = false;
             this.searchValue = "";
+            this.ifType = false;
             this.initialPageNationState();
             this.getArticleList(this.context+`/getArticleList?type=articleList&begin=${pageNationStore.dataBegin}&end=${pageNationStore.dataEnd}`);
             pageNationStore.requestType = this.context+`/getArticleList?type=articleList`;
@@ -120,6 +123,7 @@ class ArticlePage extends React.Component{
         if(!this.props.ArticleVisualStore.ifMine){
             this.ifSearch = false;
             this.searchValue = "";
+            this.ifType = false;
             this.initialPageNationState();
             this.getArticleList(this.context+`/getMyArticle?type=${this.props.CurrentUser.userName}ArticleCache&user=${this.props.CurrentUser.userName}&begin=${pageNationStore.dataBegin}&end=${pageNationStore.dataEnd}`);
             pageNationStore.requestType = this.context+`/getMyArticle?type=${this.props.CurrentUser.userName}ArticleCache&user=${this.props.CurrentUser.userName}`;
@@ -130,9 +134,10 @@ class ArticlePage extends React.Component{
 
     handleClickTab1(){
         const {PageNationStore: pageNationStore} = this.props;
-        if(this.props.ArticleVisualStore.ifAll && this.ifSearch){
+        if((this.props.ArticleVisualStore.ifAll && this.ifSearch) || (this.props.ArticleVisualStore.ifAll && this.ifType)){
             this.ifSearch = false;
             this.searchValue = "";
+            this.ifType = false;
             this.initialPageNationState();
             this.getArticleList(this.context+`/getArticleList?type=articleList&begin=${pageNationStore.dataBegin}&end=${pageNationStore.dataEnd}`);
             pageNationStore.requestType = this.context+`/getArticleList?type=articleList`;
@@ -145,9 +150,10 @@ class ArticlePage extends React.Component{
             this.props.TipStore.changeData("请先登录","warning");
             return;
         }else{
-            if(this.props.ArticleVisualStore.ifMine && this.ifSearch){
+            if((this.props.ArticleVisualStore.ifMine && this.ifSearch) || (this.props.ArticleVisualStore.ifMine && this.ifType)){
                 this.ifSearch = false;
                 this.searchValue = "";
+                this.ifType = false;
                 this.initialPageNationState();
                 this.getArticleList(this.context+`/getMyArticle?type=${this.props.CurrentUser.userName}ArticleCache&user=${this.props.CurrentUser.userName}&begin=${pageNationStore.dataBegin}&end=${pageNationStore.dataEnd}`);
                 pageNationStore.requestType = this.context+`/getMyArticle?type=${this.props.CurrentUser.userName}ArticleCache&user=${this.props.CurrentUser.userName}`;
@@ -164,6 +170,7 @@ class ArticlePage extends React.Component{
         this.initialPageNationState();
         this.ifSearch = false;
         this.searchValue = "";
+        this.ifType = true;
         if(this.props.ArticleVisualStore.ifAll){
             this.getArticleList(this.context+`/getArticleList?type=${type}ArticleList&begin=${pageNationStore.dataBegin}&end=${pageNationStore.dataEnd}`);
             pageNationStore.requestType = this.context+`/getArticleList?type=${type}ArticleList`;
@@ -190,6 +197,7 @@ class ArticlePage extends React.Component{
                             <label htmlFor="article-tab-1" className="article-tab" onClick={(e) => {this.handleClickTab1()}}>全部文章</label>
                             <input onChange={(e) => {this.handleGetMine(e);}} id="article-tab-2" type="radio" name="article-tab" className="article-tab-mine" disabled={!this.props.CurrentUser.ifLogined?"disabled":""}/>
                             <label htmlFor="article-tab-2" className="article-tab" onClick={(e) => {this.handleClickTab2()}}>我的文章</label>
+                            <label className="article-tab article-count-tab">共计&nbsp;{pageNationStore.dataSize?pageNationStore.dataSize:0}&nbsp;篇</label>
                             <input onKeyDown={(e) => {this.handleSearchArticle(e);}} onChange={ e => {pageNationStore.updatesSearchVal(e.target.value)}} value={pageNationStore.searchVal} type="text" placeholder="按标题搜索" id="searchArticleInput"/>
                         </div>
                         <Suspense fallback={<LoadingPage />}>

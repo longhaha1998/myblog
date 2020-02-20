@@ -20,6 +20,7 @@ class PageNationStore{
     constructor(){
         this.currentPage = 1;
         this.dataSize = 0;
+        // 当前页最大显示数
         this.pageSize = 3;
         this.pageBegin = 1;
         this.dataBegin = 0;

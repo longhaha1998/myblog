@@ -11,6 +11,7 @@ class PageNationComponent extends React.Component{
         this.handleClickMovePage = this.handleClickMovePage.bind(this);
         this.handleChangePageMaxNum = this.handleChangePageMaxNum.bind(this);
         this.handlePageNumChange = this.handlePageNumChange.bind(this);
+        this.updatePageBegin = this.updatePageBegin.bind(this);
     }
 
     handlePageNumChange(e){
@@ -19,8 +20,9 @@ class PageNationComponent extends React.Component{
             let temp =  Number(e.target.value);
             if(temp>=1 && temp<=pageNationStore.pageNumber){
                 pageNationStore.updateDataBegin(pageNationStore.dataBegin+(temp-pageNationStore.currentPage)*pageNationStore.pageSize);
-                pageNationStore.updatePageBegin(temp-4>1?temp-4:1);
+                // pageNationStore.updatePageBegin(temp-4>1?temp-4:1);
                 pageNationStore.updateCurrentPage(temp);
+                this.updatePageBegin();
                 this.props.getArticleList(`${pageNationStore.requestType}&begin=${pageNationStore.dataBegin}&end=${pageNationStore.dataEnd}`);
             }
         }
@@ -40,7 +42,19 @@ class PageNationComponent extends React.Component{
         if(i !== pageNationStore.currentPage){
             pageNationStore.updateDataBegin(pageNationStore.dataBegin+(i-pageNationStore.currentPage)*pageNationStore.pageSize);
             pageNationStore.updateCurrentPage(i);
+            this.updatePageBegin();
             this.props.getArticleList(`${pageNationStore.requestType}&begin=${pageNationStore.dataBegin}&end=${pageNationStore.dataEnd}`);
+        }
+    }
+
+    updatePageBegin(){
+        const {PageNationStore: pageNationStore} = this.props;
+        if(pageNationStore.currentPage <= 3 || pageNationStore.pageNumber <= 5){
+            pageNationStore.updatePageBegin(1);
+        }else if(3 < pageNationStore.currentPage && pageNationStore.currentPage < pageNationStore.pageNumber-2){
+            pageNationStore.updatePageBegin(pageNationStore.currentPage-2);
+        }else{
+            pageNationStore.updatePageBegin(pageNationStore.pageNumber-4);
         }
     }
 
@@ -51,10 +65,11 @@ class PageNationComponent extends React.Component{
                 return;
             }else{
                 pageNationStore.updateDataBegin(pageNationStore.dataBegin+pageNationStore.pageSize);
-                if(pageNationStore.currentPage+1>pageNationStore.pageEnd){
-                    pageNationStore.updatePageBegin(pageNationStore.pageBegin+1);
-                }
+                // if(pageNationStore.currentPage+1>pageNationStore.pageEnd){
+                //     pageNationStore.updatePageBegin(pageNationStore.pageBegin+1);
+                // }=
                 pageNationStore.updateCurrentPage(pageNationStore.currentPage+1);
+                this.updatePageBegin();
                 this.props.getArticleList(`${pageNationStore.requestType}&begin=${pageNationStore.dataBegin}&end=${pageNationStore.dataEnd}`);
             }
         }else{
@@ -62,10 +77,11 @@ class PageNationComponent extends React.Component{
                 return;
             }else{
                 pageNationStore.updateDataBegin(pageNationStore.dataBegin-pageNationStore.pageSize);
-                if(pageNationStore.currentPage-1<pageNationStore.pageBegin){
-                    pageNationStore.updatePageBegin(pageNationStore.pageBegin-1);
-                }
+                // if(pageNationStore.currentPage-1<pageNationStore.pageBegin){
+                //     pageNationStore.updatePageBegin(pageNationStore.pageBegin-1);
+                // }
                 pageNationStore.updateCurrentPage(pageNationStore.currentPage-1);
+                this.updatePageBegin();
                 this.props.getArticleList(`${pageNationStore.requestType}&begin=${pageNationStore.dataBegin}&end=${pageNationStore.dataEnd}`);
             }
         }

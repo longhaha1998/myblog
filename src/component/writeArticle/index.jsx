@@ -147,7 +147,7 @@ class WriteArticle extends React.Component{
                 this.props.TipStore.changeData("图片类型只能为jpg/png","warning");
             }else if(status === 1){
                 this.props.ArticleStore.updateText(this.textDom.current.value+`\n![图片描述](${this.context}${res.data.path.slice(3)})`)
-                this.props.TipStore.changeData("上传成功","warning");
+                this.props.TipStore.changeData("上传成功","success");
             }
         }).catch((err) =>{
             console.log(err);

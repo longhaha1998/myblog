@@ -58,6 +58,63 @@ class ChangeAvatarComponent extends React.Component{
         this.handleRTScale = this.handleRTScale.bind(this);
         this.handleRBScale = this.handleRBScale.bind(this);
         this.handleFinishSelect = this.handleFinishSelect.bind(this);
+
+        this.ajBoxMD = this.ajBoxMD.bind(this);
+        this.ltMD = this.ltMD.bind(this);
+        this.rtMD = this.rtMD.bind(this);
+        this.lbMD = this.lbMD.bind(this);
+        this.rbMD = this.rbMD.bind(this);
+        this.cropDomMD = this.cropDomMD.bind(this);
+        this.winUP = this.winUP.bind(this);
+    }
+
+    ajBoxMD(e){
+        e.preventDefault();
+        this.initMovePosition.x = e.clientX;
+        this.initMovePosition.y = e.clientY;
+        this.moving = true;
+    }
+
+    ltMD(e){
+        e.preventDefault();
+        this.initScalePosition.x = e.clientX;
+        this.initScalePosition.y = e.clientY;
+        this.ltScaling = true;
+    }
+
+    rtMD(e){
+        e.preventDefault();
+        this.initScalePosition.x = e.clientX;
+        this.initScalePosition.y = e.clientY;
+        this.rtScaling = true;
+    }
+
+    lbMD(e){
+        e.preventDefault();
+        this.initScalePosition.x = e.clientX;
+        this.initScalePosition.y = e.clientY;
+        this.lbScaling = true;
+    }
+
+    rbMD(e){
+        e.preventDefault();
+        this.initScalePosition.x = e.clientX;
+        this.initScalePosition.y = e.clientY;
+        this.rbScaling = true;
+    }
+
+    cropDomMD(e){
+        e.preventDefault();
+        this.handleMouseMove(e);
+    }
+
+    winUP(e){
+        e.preventDefault();
+        this.moving = false;
+        this.ltScaling = false;
+        this.rtScaling = false;
+        this.lbScaling = false;
+        this.rbScaling = false;
     }
 
     componentDidMount(){
@@ -69,99 +126,35 @@ class ChangeAvatarComponent extends React.Component{
             this.initScale(this.cropRef.current);
         };
 
-        this.adjustBox.current.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-            this.initMovePosition.x = e.clientX;
-            this.initMovePosition.y = e.clientY;
-            this.moving = true;
-        }, false);
+        this.adjustBox.current.addEventListener('mousedown', this.ajBoxMD, false);
 
-        this.lt.current.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-            this.initScalePosition.x = e.clientX;
-            this.initScalePosition.y = e.clientY;
-            this.ltScaling = true;
-        });
-        this.rt.current.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-            this.initScalePosition.x = e.clientX;
-            this.initScalePosition.y = e.clientY;
-            this.rtScaling = true;
-        });
-        this.lb.current.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-            this.initScalePosition.x = e.clientX;
-            this.initScalePosition.y = e.clientY;
-            this.lbScaling = true;
-        });
-        this.rb.current.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-            this.initScalePosition.x = e.clientX;
-            this.initScalePosition.y = e.clientY;
-            this.rbScaling = true;
-        });
+        this.lt.current.addEventListener('mousedown', this.ltMD, false);
 
-        this.cropDom.current.addEventListener('mousemove',(e) => {
-            e.preventDefault();
-            this.handleMouseMove(e);
-        },false);
+        this.rt.current.addEventListener('mousedown', this.rtMD, false);
 
-        window.addEventListener('mouseup', (e) => {
-            e.preventDefault();
-            this.moving = false;
-            this.ltScaling = false;
-            this.rtScaling = false;
-            this.lbScaling = false;
-            this.rbScaling = false;
-        },false);
+        this.lb.current.addEventListener('mousedown', this.lbMD, false);
+
+        this.rb.current.addEventListener('mousedown', this.rbMD, false);
+
+        this.cropDom.current.addEventListener('mousemove',this.cropDomMD,false);
+
+        window.addEventListener('mouseup', this.winUP, false);
     }
 
     componentWillUnmount(){
-        this.adjustBox.current.removeEventListener('mousedown', (e) => {
-            e.preventDefault();
-            this.initMovePosition.x = e.clientX;
-            this.initMovePosition.y = e.clientY;
-            this.moving = true;
-        }, false);
+        this.adjustBox.current.removeEventListener('mousedown', this.ajBoxMD, false);
 
-        this.lt.current.removeEventListener('mousedown', (e) => {
-            e.preventDefault();
-            this.initScalePosition.x = e.clientX;
-            this.initScalePosition.y = e.clientY;
-            this.ltScaling = true;
-        });
-        this.rt.current.removeEventListener('mousedown', (e) => {
-            e.preventDefault();
-            this.initScalePosition.x = e.clientX;
-            this.initScalePosition.y = e.clientY;
-            this.rtScaling = true;
-        });
-        this.lb.current.removeEventListener('mousedown', (e) => {
-            e.preventDefault();
-            this.initScalePosition.x = e.clientX;
-            this.initScalePosition.y = e.clientY;
-            this.lbScaling = true;
-        });
-        this.rb.current.removeEventListener('mousedown', (e) => {
-            e.preventDefault();
-            this.initScalePosition.x = e.clientX;
-            this.initScalePosition.y = e.clientY;
-            this.rbScaling = true;
-        });
+        this.lt.current.removeEventListener('mousedown', this.ltMD, false);
 
-        this.cropDom.current.removeEventListener('mousemove',(e) => {
-            e.preventDefault();
-            this.handleMouseMove(e);
-        },false);
+        this.rt.current.removeEventListener('mousedown', this.rtMD, false);
 
-        window.removeEventListener('mouseup', (e) => {
-            e.preventDefault();
-            this.moving = false;
-            this.ltScaling = false;
-            this.rtScaling = false;
-            this.lbScaling = false;
-            this.rbScaling = false;
-        },false)
+        this.lb.current.removeEventListener('mousedown', this.lbMD, false);
+
+        this.rb.current.removeEventListener('mousedown', this.rbMD, false);
+
+        this.cropDom.current.removeEventListener('mousemove', this.cropDomMD,false);
+
+        window.removeEventListener('mouseup', this.winUP, false);
     }
 
     handleMouseMove(e){
